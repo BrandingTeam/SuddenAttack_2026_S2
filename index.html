@@ -1249,12 +1249,40 @@ button{cursor:pointer}
 .citem b{display:block;font-weight:900;font-size:14px}
 .citem span{font-size:12px;color:var(--mute)}
 .cact{display:flex;gap:6px;flex:none}
+
+/* ===== 모바일 보기 ===== */
+#liveBox{position:absolute;left:0;right:0;bottom:0;top:0}
+#liveView.mobile{background:#050506;overflow:hidden}
+#liveView.mobile,#liveView.mobile *{cursor:auto!important}
+#liveView.mobile .modebar{display:none}
+.mbar{position:absolute;left:0;right:0;top:0;z-index:5;padding:calc(8px + env(safe-area-inset-top,0px)) 10px 8px;background:rgba(10,10,12,.96);border-bottom:1px solid #2a2c33;font-family:var(--fp);display:flex;flex-direction:column;gap:6px}
+.mrow{display:flex;align-items:center;gap:8px;min-width:0}
+.mlb{flex:none;font-size:11px;color:var(--mute);width:48px}
+.mseg{display:flex;gap:4px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mseg::-webkit-scrollbar{display:none}
+.mseg button{flex:none;height:34px;padding:0 12px;background:#17181c;border:1px solid #2f3137;color:#d4d6db;font-size:13px;font-weight:600;white-space:nowrap}
+.mseg button.g{width:38px;padding:0;font-weight:900}
+.mseg button.on{background:var(--red);border-color:var(--red-hot);color:#fff}
+.mexit{flex:none;height:34px;padding:0 10px;background:transparent;border:1px solid #3a3c43;color:#9a9da5;font-size:12px}
+.msync{flex:none;font-size:11px;color:#8a8d95;white-space:nowrap}
+.mrot{position:absolute;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;font-family:var(--fp);font-size:12px;color:#b7b9bf;background:rgba(20,21,25,.9);border:1px solid #2f3137;padding:8px 12px;white-space:nowrap}
+@media (orientation:landscape){
+  .mbar{flex-direction:row;align-items:center;gap:12px;padding:calc(6px + env(safe-area-inset-top,0px)) calc(10px + env(safe-area-inset-right,0px)) 6px calc(10px + env(safe-area-inset-left,0px))}
+  .mrow{flex:0 1 auto}
+  .mrow:first-child{flex:1 1 auto}
+  .mlb{width:auto}
+  .mseg button{height:28px;padding:0 10px;font-size:12px}
+  .mseg button.g{width:30px}
+  .mexit{height:28px}
+}
 </style>
 </head>
 <body>
 
 <div id="liveView" class="hidden">
-  <div id="liveStage"></div>
+  <div class="mbar hidden" id="mbar"></div>
+  <div id="liveBox"><div id="liveStage"></div></div>
+  <div class="mrot hidden" id="mrot">가로로 돌리면 더 크게 볼 수 있습니다</div>
   <div class="modebar" id="modebar">
     <button class="mbtn ic" data-act="mode" data-mode="admin" aria-label="관리자 모드로 전환" title="관리자 모드 (M)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     <button class="mbtn ic" data-act="fullscreen" aria-label="전체 화면" title="전체 화면"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
@@ -1275,6 +1303,7 @@ button{cursor:pointer}
     <span class="sp"></span>
     <button class="btn" data-act="resetResults">경기 결과만 초기화 (조 유지)</button>
     <button class="btn" data-act="resetBracket">조 편성까지 초기화</button>
+    <button class="btn" data-act="mode" data-mode="mobile">모바일로 보기</button>
     <button class="btn" data-act="openLive">LIVE 화면 새 창으로 열기</button>
     <button class="btn pri" data-act="mode" data-mode="live">LIVE 화면으로 전환</button>
   </header>
@@ -2050,9 +2079,11 @@ let teamListDirty=false;
 function render(){
   const s = Store.state;
   computeFlash(s);
-  const html = stageHTML(s);
-  if(ui.mode==='live'){
-    $('liveStage').innerHTML = html; fitStage($('liveStage'), $('liveView')); fitText($('liveStage'));
+  const sv = ui.mode==='mobile' ? {...s, display:{...s.display, view:ui.mview.view, group:ui.mview.group}} : s;
+  const html = stageHTML(sv);
+  if(ui.mode==='live' || ui.mode==='mobile'){
+    $('liveStage').innerHTML = html; fitLive(); fitText($('liveStage'));
+    if(ui.mode==='mobile'){ $('mbar').innerHTML = mbarHTML(); const ms=$('msync'); if(ms) ms.textContent = Cloud.db ? '● 실시간 연결' : '○ 오프라인'; }
   } else {
     $('prevStage').innerHTML = html; fitStage($('prevStage'), $('preview')); fitText($('prevStage'));
     const ae=document.activeElement, key=ae&&ae.dataset?ae.dataset.key:null;
@@ -2065,13 +2096,27 @@ function render(){
     $('teamFil').innerHTML = teamFilHTML(s);
     if(key && !typing){ const el=document.querySelector(`[data-key="${CSS.escape(key)}"]`); if(el) el.focus(); }
   }
-  lastViewKey = viewKey(s);
+  lastViewKey = viewKey(sv);
 }
 
+const modeFromHash = () => location.hash==='#live' ? 'live' : location.hash==='#mobile' ? 'mobile' : 'admin';
+// 모바일 보기: 실시간 데이터는 그대로 받되, 보는 화면 선택은 이 기기 안에서만 (저장·업로드 없음)
+ui.mview = (()=>{ try{ return JSON.parse(localStorage.getItem('sa-bracket-mobile-view')) || {view:'ALL',group:'A'}; }catch(e){ return {view:'ALL',group:'A'}; } })();
+function mbarHTML(){
+  const v=ui.mview;
+  const views=[['ROSTER','참가팀'],['ALL','전체'],['AM','오전조'],['PM','오후조'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
+  const groups=GROUP_IDS.map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
+  return `<div class="mrow"><span class="mlb">묶어 보기</span><div class="mseg">${views}</div><button class="mexit" data-act="mode" data-mode="admin" aria-label="관리자 모드로">관리자</button></div>
+    <div class="mrow"><span class="mlb">조 단독</span><div class="mseg">${groups}</div><span class="msync" id="msync"></span></div>`;
+}
 function setMode(m){
   ui.mode=m;
-  $('liveView').classList.toggle('hidden', m!=='live');
+  const lv = m==='live' || m==='mobile';
+  $('liveView').classList.toggle('hidden', !lv);
+  $('liveView').classList.toggle('mobile', m==='mobile');
+  $('mbar').classList.toggle('hidden', m!=='mobile');
   $('adminView').classList.toggle('hidden', m!=='admin');
+  if(m==='mobile') $('mbar').innerHTML = mbarHTML();
   if(location.hash!=='#'+m) history.replaceState(null,'','#'+m);
   prevSlots=null; render();
 }
@@ -2084,6 +2129,7 @@ document.addEventListener('click', e=>{
   const d=b.dataset;
   switch(d.act){
     case 'mode': setMode(d.mode); break;
+    case 'mview': ui.mview = {view:d.view, group:d.g||ui.mview.group}; try{ localStorage.setItem('sa-bracket-mobile-view', JSON.stringify(ui.mview)); }catch(_){}; lastViewKey=null; render(); break;
     case 'cloudUpload': Cloud.flush(true); break;
     case 'cloudAuto': Cloud.setAuto(!Cloud.auto); break;
     case 'cloudInfo': { const n=Cloud.pending().length; toast(Cloud.db ? (n?`업로드 대기 ${n}건: ${Cloud.pending().map(SECTION_LABEL).join(', ')}`:'클라우드와 동일합니다') : '클라우드 미연결 · 모든 변경은 이 PC에 저장되어 있고 연결되면 올릴 수 있습니다'); break; }
@@ -2162,9 +2208,16 @@ $('teamFilter').addEventListener('input', e=>{ ui.filter=e.target.value; $('team
 
 let hideT;
 document.addEventListener('mousemove', ()=>{ if(ui.mode!=='live') return; $('modebar').classList.add('show'); clearTimeout(hideT); hideT=setTimeout(()=>$('modebar').classList.remove('show'),2500); });
-window.addEventListener('resize', ()=>{ ui.mode==='live' ? fitStage($('liveStage'),$('liveView')) : fitStage($('prevStage'),$('preview')); });
+function fitLive(){
+  const box=$('liveBox');
+  box.style.top = ui.mode==='mobile' ? $('mbar').offsetHeight+'px' : '0px';
+  fitStage($('liveStage'), box);
+  if(ui.mode==='mobile'){ const st=$('liveStage').querySelector('.stage'); if(st){ const w=box.clientWidth,h=box.clientHeight,k=Math.min(w/1920,h/1080); st.style.transform=`translate(${(w-1920*k)/2}px,6px) scale(${k})`; } }   // 모바일은 위쪽 정렬
+  $('mrot').classList.toggle('hidden', !(ui.mode==='mobile' && window.innerHeight>window.innerWidth));
+}
+window.addEventListener('resize', ()=>{ (ui.mode==='live'||ui.mode==='mobile') ? fitLive() : fitStage($('prevStage'),$('preview')); });
 new ResizeObserver(()=>{ if(ui.mode==='admin') fitStage($('prevStage'),$('preview')); }).observe($('preview'));
-window.addEventListener('hashchange', ()=>{ const m=location.hash==='#live'?'live':'admin'; if(m!==ui.mode) setMode(m); });
+window.addEventListener('hashchange', ()=>{ const m=modeFromHash(); if(m!==ui.mode) setMode(m); });
 
 /* =====================================================================
    9) 클라우드 저장 (Firebase Firestore · 서버 없이 브라우저만으로 동작)
@@ -2362,7 +2415,7 @@ Store.init();
 Store.on(()=>render());
 Cloud.init();
 document.fonts && document.fonts.ready.then(()=>render());
-setMode(location.hash==='#live'?'live':'admin');
+setMode(modeFromHash());
 </script>
 </body>
 </html>
