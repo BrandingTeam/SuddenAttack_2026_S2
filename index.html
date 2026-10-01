@@ -1300,6 +1300,16 @@ button{cursor:pointer}
   #liveView.mland .mtool{width:100%;height:32px;padding:0 2px;font-size:11px}
   #liveView.mland .msync{text-align:center;font-size:10px}
 }
+
+/* ===== v42: 시드 카드 (본선 진출 현황) ===== */
+.qseed{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;background:linear-gradient(180deg,#15161a,#0e0f12);box-shadow:inset 0 0 0 1px #2a2c33}
+.qseed .qsl{width:150px;opacity:.85;margin-bottom:6px}
+.qseed .qsb{font-weight:400;font-size:26px;letter-spacing:.2em;padding:4px 16px 2px;color:var(--red-hot);box-shadow:inset 0 0 0 2px var(--red-hot)}
+.qseed .qsn{display:flex;flex-direction:column;gap:2px}
+.qseed .qsn .tn{font-size:84px;line-height:1;color:#fff}
+.qseed .qsc{font-family:var(--fk);font-size:24px;color:#fff}
+.qseed .qsc .ko{top:0;font-size:1em}
+.qseed .qsd2{font-family:var(--fk);font-size:14px;color:var(--mute)}
 </style>
 </head>
 <body>
@@ -1870,8 +1880,13 @@ function rosterCol(s,g){
     : `<div class="rvempty">참가팀 미정</div>`;
   return `<div class="rvc ${ses==='AM'?'am':'pm'}"><div class="rvh"><span class="gl">${g}<small>조</small></span><span class="rvm"><b>${ses==='AM'?'오전조':'오후조'}</b><span>${ses}${ids.length?' · '+ids.length+' TEAMS':''}</span></span></div>${cards}</div>`;
 }
-function qCount(s){
-  return `<aside class="ro qlogo" aria-hidden="true"><img src="${LOGO_SRC}" alt=""></aside>`;
+function qCount(s){   // 본선 진출 현황 오른쪽 아래: 본선 시드 팀
+  const seeds=(s.seeds||[]).map(id=>s.teams[id]).filter(Boolean);
+  const label=(s.display&&s.display.seedLabel!=null)?s.display.seedLabel:'2026 S1 챔피언';
+  if(!seeds.length) return `<aside class="ro qlogo" aria-hidden="true"><img src="${LOGO_SRC}" alt=""></aside>`;
+  return `<aside class="ro qseed"><img class="qsl" src="${LOGO_SRC}" alt=""><b class="qsb">SEED</b>
+    <div class="qsn">${seeds.map(t=>`<span class="tn">${nm(t.name)}</span>`).join('')}</div>
+    <span class="qsc">${koWrap(esc(label))}</span><span class="qsd2">본선 시드 확정</span></aside>`;
 }
 
 function stageHTML(s){
@@ -1910,7 +1925,7 @@ function stageHTML(s){
     <header class="sh">
       <img class="logo" src="${LOGO_SRC}" alt="">
       <div class="ttl"><span class="t1">서든어택 오프라인 예선 S2</span><span class="t2"><em>LIVE</em> BRACKET · ${koWrap(viewLabel)}</span></div>
-      <div class="seed"><div class="sl"><b>SEED</b><span class="sch">${esc((s.display&&s.display.seedLabel!=null)?s.display.seedLabel:'2026 S1 챔피언')}</span></div>${seedHTML}</div>
+      <span class="sp"></span>
       <div class="qc"><div class="ql"><b>본선 진출</b><span>최종 7팀</span></div><div class="qn">${qn}<small>/7</small></div></div>
     </header>
     ${body}
@@ -2061,7 +2076,7 @@ function editorHTML(s){
 
 function displayHTML(s){
   const d=s.display;
-  const views=[['ROSTER','참가팀 명단'],['ALL','전체 A–G'],['AM','오전조 A–D'],['PM','오후조 E–G'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
+  const views=[['ROSTER','참가팀 명단'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="${d.view==='GROUP'&&d.group===g?'on':''}" data-act="viewGroup" data-g="${g}">${g}</button>`).join('');
   return `<div class="ph"><h2>LIVE 화면 구성</h2><span class="sub">선택 즉시 방송 화면에 반영</span></div>
     <div class="pb"><div class="row2"><span class="lb">묶어 보기</span><div class="seg" role="group" aria-label="묶어 보기">${views}</div></div>
@@ -2131,7 +2146,7 @@ ui.mfill = false;
 ui.mview = (()=>{ try{ return JSON.parse(localStorage.getItem('sa-bracket-mobile-view')) || {view:'ALL',group:'A'}; }catch(e){ return {view:'ALL',group:'A'}; } })();
 function mbarHTML(){
   const v=ui.mview;
-  const views=[['ROSTER','참가팀'],['ALL','전체'],['AM','오전조'],['PM','오후조'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
+  const views=[['ROSTER','참가팀'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
   return `<div class="mg mgL"><span class="mlb">묶어 보기</span><div class="mseg">${views}</div><span class="msp"></span>
       <button class="mtool" data-act="mfill" aria-pressed="false">꽉 차게</button><button class="mtool" data-act="mode" data-mode="admin">관리자</button></div>
