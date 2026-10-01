@@ -1339,7 +1339,10 @@ function defaultDisplay(){ return {view:'ALL', group:'A', seedLabel:'2026 S1 챔
 function emptyState(){ return {schema:9, teams:{}, seeds:[], ...emptyBracket(), display:defaultDisplay(), updatedAt:Date.now()}; }
 function migrate(s){
   if(!s) return null;
-  if(s.schema===9) return s;
+  if(s.schema===9){   // 저장 데이터 보정: 보노보노 김동재 → Extract
+    Object.values(s.teams||{}).forEach(t=>{ if(t.name==='보노보노'){ t.players=(t.players||[]).map(p=>p==='김동재'?'Extract':p); if(t.leader==='김동재') t.leader='Extract'; } });
+    return s;
+  }
   const ns = seedState();                       // 이전 대진 구조는 새 포맷 샘플로 교체 (화면 설정은 유지)
   if(s.display) ns.display = {...defaultDisplay(), ...s.display};
   return ns;
@@ -1373,11 +1376,11 @@ const Store = {
     this.adapter.save(this.state);
     this.adapter.subscribe(s=>{ s=migrate(s); if(s && s.updatedAt!==this.state.updatedAt){ this.state = s; this.emit('remote'); } });
   },
-  commit(mutator){
+  commit(mutator, kind){
     const s = JSON.parse(JSON.stringify(this.state));
     mutator(s);
     s.updatedAt = Date.now();
-    this.state = s; this.adapter.save(s); this.emit('local');
+    this.state = s; this.adapter.save(s); this.emit(kind==='view' ? 'view' : 'local');   // 'view' = 방송 화면 선택(로컬 전용)
   },
   on(fn){ this.listeners.add(fn); },
   applyRemote(mutator){                         // 클라우드에서 받은 변경 반영 (로컬 저장은 즉시, 업로드 트리거는 하지 않음)
@@ -1579,7 +1582,7 @@ const A = {
    5) 샘플 데이터
    ===================================================================== */
 // 26S2 예선 참여자 명단 (대회용 닉네임, l = 팀장, qs = 예선 시드권) + 본선 시드 FINF
-const SAMPLE_TEAMS = [{"n": "galaclan", "p": ["우처리", "hanayuki", "omnipotenT-_-", "대하니", "ASLAN", "극댜"], "l": "우처리", "ses": "AM", "qs": false}, {"n": "zzan", "p": ["zzan_손찬수", "zzan_이광섭", "zzan_최정훈", "zzan_장시혁", "zzan_임창모", "zzan_이은수"], "l": "zzan_손찬수", "ses": "AM", "qs": false}, {"n": "white+", "p": ["gwansu", "younguk", "ddeok", "Kwan", "dongwoo"], "l": "gwansu", "ses": "AM", "qs": false}, {"n": "도개걸윷모", "p": ["dzez~♥", "Entei", "♡♡-", "infy", "sweet"], "l": "dzez~♥", "ses": "AM", "qs": false}, {"n": "병찬이와팔춘이", "p": ["유즈리하", "배성훈", "토마스", "보근", "윤병찬"], "l": "유즈리하", "ses": "AM", "qs": false}, {"n": "달콩", "p": ["달콩_더티", "달콩_디퓨저", "달콩_언덕", "달콩_아이스슈", "달콩_플레이어"], "l": "달콩_더티", "ses": "AM", "qs": false}, {"n": "PAUL", "p": ["정경수", "훅샷", "봉봉", "카타리나", "boramari"], "l": "정경수", "ses": "AM", "qs": true}, {"n": "야인시대", "p": ["뢴트게늄", "정태빈", "김두환", "lIllMIIlI", "어허골"], "l": "뢴트게늄", "ses": "AM", "qs": false}, {"n": "지나가볼게요", "p": ["사랑병", "성환5", "yousocute", "garin", "Hanguri"], "l": "사랑병", "ses": "AM", "qs": false}, {"n": "3xy2xx", "p": ["이성희", "고수진", "데스페어", "하츄핑", "임건우"], "l": "이성희", "ses": "AM", "qs": false}, {"n": "위아래없는청년들", "p": ["위아래없는청년", "giyul", "kyosoon", "seungkyu", "Natalie"], "l": "위아래없는청년", "ses": "AM", "qs": false}, {"n": "hypnotic", "p": ["hyp초코비", "hyp사디", "hyp영키", "hyp슈가", "hypw"], "l": "hyp초코비", "ses": "AM", "qs": false}, {"n": "맛탱이", "p": ["hug", "gyojoon", "cry", "amblack", "sibi"], "l": "hug", "ses": "AM", "qs": false}, {"n": "iramors", "p": ["SC1..안현수", "casiwyn", "shocker", "우해", "march"], "l": "SC1..안현수", "ses": "AM", "qs": false}, {"n": "보노보노", "p": ["샐룽이", "나영석", "김동재", "cosala", "유주형", "백준규"], "l": "샐룽이", "ses": "PM", "qs": false}, {"n": "black+", "p": ["DURI", "Jini", "aya", "jhun", "isabel"], "l": "DURI", "ses": "PM", "qs": false}, {"n": "nirvana", "p": ["wlgns", "khazix", "GRAVITY", "zzibu", "Tricke"], "l": "wlgns", "ses": "PM", "qs": false}, {"n": "꾸들", "p": ["KimCrazy", "dongdong", "SILRENG", "nasu", "GodThem"], "l": "KimCrazy", "ses": "PM", "qs": false}, {"n": "진짜로?", "p": ["밍고", "헤이코", "짱구", "얼추", "햅번"], "l": "밍고", "ses": "PM", "qs": false}, {"n": "교통사고.", "p": ["용욱", "indigo", "SC4..조민서", "비오는날커피한잔", "seunghyeok"], "l": "용욱", "ses": "PM", "qs": false}, {"n": "knight", "p": ["Bucheonguy", "kwonchan", "Reiley", "turtle", "irai"], "l": "Bucheonguy", "ses": "PM", "qs": true}, {"n": "UlsaN_ClaN", "p": ["류지성", "천재림", "이상맹", "빵민", "백인"], "l": "류지성", "ses": "PM", "qs": false}, {"n": "도전자", "p": ["Dean", "kibo", "Bedro", "chamber", "Blackstar"], "l": "Dean", "ses": "PM", "qs": false}, {"n": "캐시캐치", "p": ["by", "DlOS", "크아앙크롱", "서제이", "jochangbin"], "l": "by", "ses": "PM", "qs": false}, {"n": "FINF", "p": ["orca", "PONYO", "DRAKE", "TENCY", "RAENG"], "l": "orca", "ses": "SEED", "qs": false}];
+const SAMPLE_TEAMS = [{"n": "galaclan", "p": ["우처리", "hanayuki", "omnipotenT-_-", "대하니", "ASLAN", "극댜"], "l": "우처리", "ses": "AM", "qs": false}, {"n": "zzan", "p": ["zzan_손찬수", "zzan_이광섭", "zzan_최정훈", "zzan_장시혁", "zzan_임창모", "zzan_이은수"], "l": "zzan_손찬수", "ses": "AM", "qs": false}, {"n": "white+", "p": ["gwansu", "younguk", "ddeok", "Kwan", "dongwoo"], "l": "gwansu", "ses": "AM", "qs": false}, {"n": "도개걸윷모", "p": ["dzez~♥", "Entei", "♡♡-", "infy", "sweet"], "l": "dzez~♥", "ses": "AM", "qs": false}, {"n": "병찬이와팔춘이", "p": ["유즈리하", "배성훈", "토마스", "보근", "윤병찬"], "l": "유즈리하", "ses": "AM", "qs": false}, {"n": "달콩", "p": ["달콩_더티", "달콩_디퓨저", "달콩_언덕", "달콩_아이스슈", "달콩_플레이어"], "l": "달콩_더티", "ses": "AM", "qs": false}, {"n": "PAUL", "p": ["정경수", "훅샷", "봉봉", "카타리나", "boramari"], "l": "정경수", "ses": "AM", "qs": true}, {"n": "야인시대", "p": ["뢴트게늄", "정태빈", "김두환", "lIllMIIlI", "어허골"], "l": "뢴트게늄", "ses": "AM", "qs": false}, {"n": "지나가볼게요", "p": ["사랑병", "성환5", "yousocute", "garin", "Hanguri"], "l": "사랑병", "ses": "AM", "qs": false}, {"n": "3xy2xx", "p": ["이성희", "고수진", "데스페어", "하츄핑", "임건우"], "l": "이성희", "ses": "AM", "qs": false}, {"n": "위아래없는청년들", "p": ["위아래없는청년", "giyul", "kyosoon", "seungkyu", "Natalie"], "l": "위아래없는청년", "ses": "AM", "qs": false}, {"n": "hypnotic", "p": ["hyp초코비", "hyp사디", "hyp영키", "hyp슈가", "hypw"], "l": "hyp초코비", "ses": "AM", "qs": false}, {"n": "맛탱이", "p": ["hug", "gyojoon", "cry", "amblack", "sibi"], "l": "hug", "ses": "AM", "qs": false}, {"n": "iramors", "p": ["SC1..안현수", "casiwyn", "shocker", "우해", "march"], "l": "SC1..안현수", "ses": "AM", "qs": false}, {"n": "보노보노", "p": ["샐룽이", "나영석", "Extract", "cosala", "유주형", "백준규"], "l": "샐룽이", "ses": "PM", "qs": false}, {"n": "black+", "p": ["DURI", "Jini", "aya", "jhun", "isabel"], "l": "DURI", "ses": "PM", "qs": false}, {"n": "nirvana", "p": ["wlgns", "khazix", "GRAVITY", "zzibu", "Tricke"], "l": "wlgns", "ses": "PM", "qs": false}, {"n": "꾸들", "p": ["KimCrazy", "dongdong", "SILRENG", "nasu", "GodThem"], "l": "KimCrazy", "ses": "PM", "qs": false}, {"n": "진짜로?", "p": ["밍고", "헤이코", "짱구", "얼추", "햅번"], "l": "밍고", "ses": "PM", "qs": false}, {"n": "교통사고.", "p": ["용욱", "indigo", "SC4..조민서", "비오는날커피한잔", "seunghyeok"], "l": "용욱", "ses": "PM", "qs": false}, {"n": "knight", "p": ["Bucheonguy", "kwonchan", "Reiley", "turtle", "irai"], "l": "Bucheonguy", "ses": "PM", "qs": true}, {"n": "UlsaN_ClaN", "p": ["류지성", "천재림", "이상맹", "빵민", "백인"], "l": "류지성", "ses": "PM", "qs": false}, {"n": "도전자", "p": ["Dean", "kibo", "Bedro", "chamber", "Blackstar"], "l": "Dean", "ses": "PM", "qs": false}, {"n": "캐시캐치", "p": ["by", "DlOS", "크아앙크롱", "서제이", "jochangbin"], "l": "by", "ses": "PM", "qs": false}, {"n": "FINF", "p": ["orca", "PONYO", "DRAKE", "TENCY", "RAENG"], "l": "orca", "ses": "SEED", "qs": false}];
 function seedState(){
   const s = emptyState(), id={};
   SAMPLE_TEAMS.forEach((t,i)=>{ const k='t'+String(i+1).padStart(2,'0'); id[t.n]=k; s.teams[k]={id:k,name:t.n,players:t.p.slice(),leader:t.l||null,qseed:false,session:t.ses==='PM'?'PM':'AM'}; });   // 화면상 시드 표기는 본선 시드 FINF만
@@ -2096,8 +2099,8 @@ document.addEventListener('click', e=>{
       if(d.k==='ALL') ui.tg=[]; else ui.tg = ui.tg.includes(d.k) ? ui.tg.filter(x=>x!==d.k) : [...ui.tg, d.k];
       $('teamFil').innerHTML = teamFilHTML(Store.state); $('teamList').innerHTML = teamListHTML(Store.state); break; }
     case 'phase': Store.commit(s=>A.setPhase(s,d.g,d.phase)); if(d.phase==='DRAW'){ const f=Store.state.groups[d.g].fmt; toast(f?`${d.g}조 대진 확정 · ${FMT_INFO[f].tag}`:'참가팀이 없습니다'); } break;
-    case 'view': Store.commit(s=>A.setDisplay(s,d.view)); toast(`LIVE 화면: ${b.textContent}`); break;
-    case 'viewGroup': Store.commit(s=>A.setDisplay(s,'GROUP',d.g)); toast(`LIVE 화면: ${d.g}조 단독`); break;
+    case 'view': Store.commit(s=>A.setDisplay(s,d.view), 'view'); toast(`LIVE 화면: ${b.textContent}`); break;
+    case 'viewGroup': Store.commit(s=>A.setDisplay(s,'GROUP',d.g), 'view'); toast(`LIVE 화면: ${d.g}조 단독`); break;
     case 'onair': { const on=!Store.state.live.liveMatchIds.includes(d.mid); Store.commit(s=>A.toggleLive(s,d.mid)); toast(`${d.mid.replace('-',' ')} 경기중 ${on?'ON':'OFF'}`); break; }
     case 'leader': Store.commit(s=>A.toggleLeader(s,d.tid,d.name)); break;
     case 'seed': Store.commit(s=>A.toggleSeed(s,d.tid)); break;
@@ -2124,7 +2127,10 @@ document.addEventListener('click', e=>{
       const s=Store.state, t=s.teams[d.tid], g=Q.assignment(s)[d.tid];
       if(confirm(`${t.name} 팀을 삭제할까요?${g?`\n${g}조 대진에서도 빠집니다.`:''}`)) Store.commit(s=>A.removeTeam(s,d.tid));
       break; }
-    case 'sample': if(confirm('현재 데이터를 샘플 데이터로 바꿀까요?')){ Store.commit(s=>{ const dsp=s.display; Object.assign(s, seedState()); s.display=dsp; }); toast('샘플 데이터를 불러왔습니다'); } break;
+    case 'sample': if(confirm('조 편성·경기를 샘플 진행 상태로 바꿉니다. 팀명·선수·팀장 등 현재 팀 정보는 그대로 유지됩니다.')){ Store.commit(s=>{ const dsp=s.display, cur=s.teams||{}, seeds=s.seeds; const ns=seedState();
+      Object.keys(ns.teams).forEach(id=>{ if(cur[id]) ns.teams[id]=cur[id]; });            // 같은 팀은 현장 수정본 유지
+      Object.keys(cur).forEach(id=>{ if(!ns.teams[id]) ns.teams[id]=cur[id]; });          // 현장에서 추가한 팀도 유지
+      Object.assign(s, ns); s.display=dsp; if(seeds && seeds.length) s.seeds=seeds; }); toast('샘플 진행 상태를 불러왔습니다 · 팀 정보는 유지'); } break;
     case 'resetBracket': if(confirm('모든 조 편성과 경기 결과를 지웁니다. 팀 정보(오전·오후 구분 포함)는 유지됩니다.')){ Store.commit(s=>{ Object.assign(s, emptyBracket()); }); toast('조 편성까지 초기화했습니다'); } break;
     case 'resetResults': if(confirm('조 편성은 그대로 두고 모든 경기 결과·경기중·기권 상태만 지웁니다.')){ Store.commit(s=>{ s.results={}; s.live={liveMatchIds:[],nextMatchId:null}; GROUP_IDS.forEach(g=>{ const grp=s.groups[g]; Object.keys(grp.out).forEach(t=>{ if(grp.out[t]==='forfeit') delete grp.out[t]; }); grp.tieWinner=null; A.rebuild(s,g); }); }); toast('경기 결과를 초기화했습니다'); } break;
     case 'tses': Store.commit(s=>{ const t=s.teams[d.tid]; if(t) t.session = t.session==='PM' ? 'AM' : 'PM'; }); break;
@@ -2177,7 +2183,7 @@ const FIREBASE_CONFIG = {
   measurementId: "G-P875YST3XX"
 };
 const SECTION_KEYS = ['teams','meta', ...GROUP_IDS.map(g=>'group_'+g)];
-const SECTION_LABEL = k => k==='teams' ? '참가팀 정보' : k==='meta' ? '시드 · LIVE 화면 구성' : k.slice(6)+'조 편성 · 경기';
+const SECTION_LABEL = k => k==='teams' ? '참가팀 정보' : k==='meta' ? '시드 팀 · 시드 문구' : k.slice(6)+'조 편성 · 경기';
 
 function stableStr(v){
   if(v===null || typeof v!=='object') return JSON.stringify(v===undefined?null:v);
@@ -2186,7 +2192,7 @@ function stableStr(v){
 }
 function hashOf(v){ const str=stableStr(v); let h=0x811c9dc5; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,0x01000193); } return (h>>>0).toString(36)+':'+str.length; }
 function sectionsOf(s){
-  const out = { teams:{teams:s.teams||{}}, meta:{seeds:s.seeds||[], display:s.display||defaultDisplay()} };
+  const out = { teams:{teams:s.teams||{}}, meta:{seeds:s.seeds||[], seedLabel:(s.display&&s.display.seedLabel!=null)?s.display.seedLabel:defaultDisplay().seedLabel} };   // 방송 화면 선택(view/group)은 PC별 로컬 전용
   GROUP_IDS.forEach(g=>{
     const pre=g+'-', pick=o=>Object.fromEntries(Object.entries(o||{}).filter(([k])=>k.startsWith(pre)));
     out['group_'+g] = { group:s.groups[g], matches:pick(s.matches), results:pick(s.results), sets:pick(s.sets), live:((s.live&&s.live.liveMatchIds)||[]).filter(id=>id.startsWith(pre)).sort() };
@@ -2196,7 +2202,7 @@ function sectionsOf(s){
 function applySection(s,key,d){
   if(!d) return;
   if(key==='teams') s.teams = d.teams||{};
-  else if(key==='meta'){ s.seeds = d.seeds||[]; s.display = {...defaultDisplay(), ...(d.display||{})}; }
+  else if(key==='meta'){ s.seeds = d.seeds||[]; const lbl = d.seedLabel!=null ? d.seedLabel : (d.display&&d.display.seedLabel); s.display = {...defaultDisplay(), ...(s.display||{}), ...(lbl!=null?{seedLabel:lbl}:{})}; }
   else if(key.startsWith('group_')){
     const g=key.slice(6), pre=g+'-';
     if(d.group) s.groups[g] = d.group;
