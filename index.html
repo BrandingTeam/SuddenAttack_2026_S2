@@ -2104,7 +2104,7 @@ function editorHTML(s){
 
 function displayHTML(s){
   const d=s.display;
-  const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조편성'],['AM','오전조 풀'],['PM','오후조 풀'],['ALL','전체 풀'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
+  const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조 확인용'],['AM','조편성 오전'],['PM','조편성 오후'],['ALL','전체 풀'],['Q','결과 안내']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="${d.view==='GROUP'&&d.group===g?'on':''}" data-act="viewGroup" data-g="${g}">${g}</button>`).join('');
   return `<div class="ph"><h2>LIVE 화면 구성</h2><span class="sub">선택 즉시 방송 화면에 반영</span></div>
     <div class="pb"><div class="row2"><span class="lb">묶어 보기</span><div class="seg" role="group" aria-label="묶어 보기">${views}</div></div>
@@ -2183,7 +2183,7 @@ ui.mfill = (()=>{ try{ return localStorage.getItem('sa-bracket-mobile-fill')==='
 ui.mview = (()=>{ try{ return JSON.parse(localStorage.getItem('sa-bracket-mobile-view')) || {view:'ALL',group:'A'}; }catch(e){ return {view:'ALL',group:'A'}; } })();
 function mbarHTML(){
   const v=ui.mview;
-  const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조편성'],['AM','오전조 풀'],['PM','오후조 풀'],['ALL','전체 풀'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
+  const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조 확인용'],['AM','조편성 오전'],['PM','조편성 오후'],['ALL','전체 풀'],['Q','결과 안내']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
   return `<div class="mg mgL"><span class="mlb">묶어 보기</span><div class="mseg">${views}</div><span class="msp"></span>
       <button class="mtool" data-act="mfill" aria-pressed="false">꽉 차게</button><button class="mtool" data-act="mode" data-mode="admin">관리자</button></div>
