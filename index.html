@@ -1310,6 +1310,10 @@ button{cursor:pointer}
 .qseed .qsc{font-family:var(--fk);font-size:24px;color:#fff}
 .qseed .qsc .ko{top:0;font-size:1em}
 .qseed .qsd2{font-family:var(--fk);font-size:14px;color:var(--mute)}
+
+.cbox.ask{width:min(440px,100%)}
+.cbox.ask p{margin:0 0 18px;font-size:15px;line-height:1.6;white-space:pre-line}
+.askb{display:flex;justify-content:flex-end;gap:8px}
 </style>
 </head>
 <body>
@@ -1331,6 +1335,7 @@ button{cursor:pointer}
     <h1>대진 운영<small>OFFLINE QUALIFIER CONTROL</small></h1>
     <div class="cloudbar" id="cloudBar">
       <button class="cpill" id="cloudPill" data-act="cloudInfo" aria-live="polite"><i></i><span id="cloudText">클라우드 연결 중…</span></button>
+      <button class="btn" data-act="cloudPull" id="cloudPullBtn">클라우드 불러오기</button>
       <button class="btn" data-act="cloudUpload" id="cloudUploadBtn">업로드</button>
       <button class="btn ctoggle" data-act="cloudAuto" id="cloudAutoBtn" aria-pressed="false"><b></b>자동 업로드</button>
       <button class="btn ghost hidden" data-act="cloudConflicts" id="cloudConfBtn">충돌 0</button>
@@ -1361,6 +1366,9 @@ button{cursor:pointer}
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div class="cmodal hidden" id="askModal" role="dialog" aria-modal="true" aria-labelledby="askMsg">
+  <div class="cbox ask"><p id="askMsg"></p><div class="askb"><button class="btn ghost" id="askNo">취소</button><button class="btn pri" id="askYes">확인</button></div></div>
+</div>
 <div class="cmodal hidden" id="confModal" role="dialog" aria-modal="true" aria-labelledby="confTitle">
   <div class="cbox">
     <div class="ch"><h3 id="confTitle">충돌 보관함</h3><button class="btn ghost" data-act="confClose">닫기</button></div>
@@ -1405,6 +1413,7 @@ function emptyState(){ return {schema:9, teams:{}, seeds:[], ...emptyBracket(), 
 function migrate(s){
   if(!s) return null;
   if(s.schema===9){   // 저장 데이터 보정: 보노보노 김동재 → Extract
+    Object.values(s.teams||{}).forEach(t=>{ t.players=(t.players||[]).map(p=>p==='turtle'?'J1hoon':p); if(t.leader==='turtle') t.leader='J1hoon'; });   // turtle → J1hoon
     Object.values(s.teams||{}).forEach(t=>{ if(t.name==='보노보노'){ t.players=(t.players||[]).map(p=>p==='김동재'?'Extract':p); if(t.leader==='김동재') t.leader='Extract'; } });
     return s;
   }
@@ -1647,7 +1656,7 @@ const A = {
    5) 샘플 데이터
    ===================================================================== */
 // 26S2 예선 참여자 명단 (대회용 닉네임, l = 팀장, qs = 예선 시드권) + 본선 시드 FINF
-const SAMPLE_TEAMS = [{"n": "galaclan", "p": ["우처리", "hanayuki", "omnipotenT-_-", "대하니", "ASLAN", "극댜"], "l": "우처리", "ses": "AM", "qs": false}, {"n": "zzan", "p": ["zzan_손찬수", "zzan_이광섭", "zzan_최정훈", "zzan_장시혁", "zzan_임창모", "zzan_이은수"], "l": "zzan_손찬수", "ses": "AM", "qs": false}, {"n": "white+", "p": ["gwansu", "younguk", "ddeok", "Kwan", "dongwoo"], "l": "gwansu", "ses": "AM", "qs": false}, {"n": "도개걸윷모", "p": ["dzez~♥", "Entei", "♡♡-", "infy", "sweet"], "l": "dzez~♥", "ses": "AM", "qs": false}, {"n": "병찬이와팔춘이", "p": ["유즈리하", "배성훈", "토마스", "보근", "윤병찬"], "l": "유즈리하", "ses": "AM", "qs": false}, {"n": "달콩", "p": ["달콩_더티", "달콩_디퓨저", "달콩_언덕", "달콩_아이스슈", "달콩_플레이어"], "l": "달콩_더티", "ses": "AM", "qs": false}, {"n": "PAUL", "p": ["정경수", "훅샷", "봉봉", "카타리나", "boramari"], "l": "정경수", "ses": "AM", "qs": true}, {"n": "야인시대", "p": ["뢴트게늄", "정태빈", "김두환", "lIllMIIlI", "어허골"], "l": "뢴트게늄", "ses": "AM", "qs": false}, {"n": "지나가볼게요", "p": ["사랑병", "성환5", "yousocute", "garin", "Hanguri"], "l": "사랑병", "ses": "AM", "qs": false}, {"n": "3xy2xx", "p": ["이성희", "고수진", "데스페어", "하츄핑", "임건우"], "l": "이성희", "ses": "AM", "qs": false}, {"n": "위아래없는청년들", "p": ["위아래없는청년", "giyul", "kyosoon", "seungkyu", "Natalie"], "l": "위아래없는청년", "ses": "AM", "qs": false}, {"n": "hypnotic", "p": ["hyp초코비", "hyp사디", "hyp영키", "hyp슈가", "hypw"], "l": "hyp초코비", "ses": "AM", "qs": false}, {"n": "맛탱이", "p": ["hug", "gyojoon", "cry", "amblack", "sibi"], "l": "hug", "ses": "AM", "qs": false}, {"n": "iramors", "p": ["SC1..안현수", "casiwyn", "shocker", "우해", "march"], "l": "SC1..안현수", "ses": "AM", "qs": false}, {"n": "보노보노", "p": ["샐룽이", "나영석", "Extract", "cosala", "유주형", "백준규"], "l": "샐룽이", "ses": "PM", "qs": false}, {"n": "black+", "p": ["DURI", "Jini", "aya", "jhun", "isabel"], "l": "DURI", "ses": "PM", "qs": false}, {"n": "nirvana", "p": ["wlgns", "khazix", "GRAVITY", "zzibu", "Tricke"], "l": "wlgns", "ses": "PM", "qs": false}, {"n": "꾸들", "p": ["KimCrazy", "dongdong", "SILRENG", "nasu", "GodThem"], "l": "KimCrazy", "ses": "PM", "qs": false}, {"n": "진짜로?", "p": ["밍고", "헤이코", "짱구", "얼추", "햅번"], "l": "밍고", "ses": "PM", "qs": false}, {"n": "교통사고.", "p": ["용욱", "indigo", "SC4..조민서", "비오는날커피한잔", "seunghyeok"], "l": "용욱", "ses": "PM", "qs": false}, {"n": "knight", "p": ["Bucheonguy", "kwonchan", "Reiley", "turtle", "irai"], "l": "Bucheonguy", "ses": "PM", "qs": true}, {"n": "UlsaN_ClaN", "p": ["류지성", "천재림", "이상맹", "빵민", "백인"], "l": "류지성", "ses": "PM", "qs": false}, {"n": "도전자", "p": ["Dean", "kibo", "Bedro", "chamber", "Blackstar"], "l": "Dean", "ses": "PM", "qs": false}, {"n": "캐시캐치", "p": ["by", "DlOS", "크아앙크롱", "서제이", "jochangbin"], "l": "by", "ses": "PM", "qs": false}, {"n": "FINF", "p": ["orca", "PONYO", "DRAKE", "TENCY", "RAENG"], "l": "orca", "ses": "SEED", "qs": false}];
+const SAMPLE_TEAMS = [{"n": "galaclan", "p": ["우처리", "hanayuki", "omnipotenT-_-", "대하니", "ASLAN", "극댜"], "l": "우처리", "ses": "AM", "qs": false}, {"n": "zzan", "p": ["zzan_손찬수", "zzan_이광섭", "zzan_최정훈", "zzan_장시혁", "zzan_임창모", "zzan_이은수"], "l": "zzan_손찬수", "ses": "AM", "qs": false}, {"n": "white+", "p": ["gwansu", "younguk", "ddeok", "Kwan", "dongwoo"], "l": "gwansu", "ses": "AM", "qs": false}, {"n": "도개걸윷모", "p": ["dzez~♥", "Entei", "♡♡-", "infy", "sweet"], "l": "dzez~♥", "ses": "AM", "qs": false}, {"n": "병찬이와팔춘이", "p": ["유즈리하", "배성훈", "토마스", "보근", "윤병찬"], "l": "유즈리하", "ses": "AM", "qs": false}, {"n": "달콩", "p": ["달콩_더티", "달콩_디퓨저", "달콩_언덕", "달콩_아이스슈", "달콩_플레이어"], "l": "달콩_더티", "ses": "AM", "qs": false}, {"n": "PAUL", "p": ["정경수", "훅샷", "봉봉", "카타리나", "boramari"], "l": "정경수", "ses": "AM", "qs": true}, {"n": "야인시대", "p": ["뢴트게늄", "정태빈", "김두환", "lIllMIIlI", "어허골"], "l": "뢴트게늄", "ses": "AM", "qs": false}, {"n": "지나가볼게요", "p": ["사랑병", "성환5", "yousocute", "garin", "Hanguri"], "l": "사랑병", "ses": "AM", "qs": false}, {"n": "3xy2xx", "p": ["이성희", "고수진", "데스페어", "하츄핑", "임건우"], "l": "이성희", "ses": "AM", "qs": false}, {"n": "위아래없는청년들", "p": ["위아래없는청년", "giyul", "kyosoon", "seungkyu", "Natalie"], "l": "위아래없는청년", "ses": "AM", "qs": false}, {"n": "hypnotic", "p": ["hyp초코비", "hyp사디", "hyp영키", "hyp슈가", "hypw"], "l": "hyp초코비", "ses": "AM", "qs": false}, {"n": "맛탱이", "p": ["hug", "gyojoon", "cry", "amblack", "sibi"], "l": "hug", "ses": "AM", "qs": false}, {"n": "iramors", "p": ["SC1..안현수", "casiwyn", "shocker", "우해", "march"], "l": "SC1..안현수", "ses": "AM", "qs": false}, {"n": "보노보노", "p": ["샐룽이", "나영석", "Extract", "cosala", "유주형", "백준규"], "l": "샐룽이", "ses": "PM", "qs": false}, {"n": "black+", "p": ["DURI", "Jini", "aya", "jhun", "isabel"], "l": "DURI", "ses": "PM", "qs": false}, {"n": "nirvana", "p": ["wlgns", "khazix", "GRAVITY", "zzibu", "Tricke"], "l": "wlgns", "ses": "PM", "qs": false}, {"n": "꾸들", "p": ["KimCrazy", "dongdong", "SILRENG", "nasu", "GodThem"], "l": "KimCrazy", "ses": "PM", "qs": false}, {"n": "진짜로?", "p": ["밍고", "헤이코", "짱구", "얼추", "햅번"], "l": "밍고", "ses": "PM", "qs": false}, {"n": "교통사고.", "p": ["용욱", "indigo", "SC4..조민서", "비오는날커피한잔", "seunghyeok"], "l": "용욱", "ses": "PM", "qs": false}, {"n": "knight", "p": ["Bucheonguy", "kwonchan", "Reiley", "J1hoon", "irai"], "l": "Bucheonguy", "ses": "PM", "qs": true}, {"n": "UlsaN_ClaN", "p": ["류지성", "천재림", "이상맹", "빵민", "백인"], "l": "류지성", "ses": "PM", "qs": false}, {"n": "도전자", "p": ["Dean", "kibo", "Bedro", "chamber", "Blackstar"], "l": "Dean", "ses": "PM", "qs": false}, {"n": "캐시캐치", "p": ["by", "DlOS", "크아앙크롱", "서제이", "jochangbin"], "l": "by", "ses": "PM", "qs": false}, {"n": "FINF", "p": ["orca", "PONYO", "DRAKE", "TENCY", "RAENG"], "l": "orca", "ses": "SEED", "qs": false}];
 function seedState(){
   const s = emptyState(), id={};
   SAMPLE_TEAMS.forEach((t,i)=>{ const k='t'+String(i+1).padStart(2,'0'); id[t.n]=k; s.teams[k]={id:k,name:t.n,players:t.p.slice(),leader:t.l||null,qseed:false,session:t.ses==='PM'?'PM':'AM'}; });   // 화면상 시드 표기는 본선 시드 FINF만
@@ -1868,7 +1877,7 @@ function rosterCard(s,t){
 }
 function rosterSession(s,ses,span){
   const ids = Object.values(s.teams).filter(t=>!(s.seeds||[]).includes(t.id) && (t.session||'AM')===ses).map(t=>t.id);
-  return `<div class="rvc ${ses==='AM'?'am':'pm'} big" style="grid-column:span ${span||(ses==='AM'?4:3)}"><div class="rvh"><span class="rvm"><b>${ses==='AM'?'오전조':'오후조'}</b><span>${ses} · ${ids.length} TEAMS · 조 편성 전</span></span></div><div class="rvg">${ids.map(t=>rosterCard(s,t)).join('')||'<div class="rvempty">참가팀 없음</div>'}</div></div>`;
+  return `<div class="rvc ${ses==='AM'?'am':'pm'} big" style="grid-column:span ${span||(ses==='AM'?4:3)}"><div class="rvh"><span class="rvm"><b>${ses==='AM'?'오전조':'오후조'}</b><span>${ses} · ${ids.length} TEAMS</span></span></div><div class="rvg">${ids.map(t=>rosterCard(s,t)).join('')||'<div class="rvempty">참가팀 없음</div>'}</div></div>`;
 }
 function rosterCol(s,g){
   const grp=s.groups[g], q=Q.qualified(s,g), ses=grp.session;
@@ -1906,8 +1915,11 @@ function stageHTML(s){
     viewLabel='본선 진출 현황 · 최종 7팀';
     body = `<section class="row qrow am${vin}">${band('AM','오전조','A–D')}${['A','B','C','D'].map(g=>qCard(s,g)).join('')}</section>
     <section class="row qrow pm${vin}">${band('PM','오후조','E–G')}${['E','F','G'].map(g=>qCard(s,g)).join('')}${qCount(s)}</section>`;
+  } else if(d.view==='ROSTER_S'){
+    viewLabel='참가팀 명단 · 오전조 / 오후조';
+    body = `<section class="rview${vin}">${rosterSession(s,'AM',4)}${rosterSession(s,'PM',3)}</section>`;
   } else if(d.view==='ROSTER'){
-    viewLabel='참가팀 명단';
+    viewLabel='배정 후 명단';
     const grouped = gs => gs.some(g=>s.groups[g].phase!=='TBD' && s.groups[g].entrants.some(Boolean));   // 오전/오후 각각 조 편성 여부
     const part = (ses,gs) => grouped(gs) ? gs.map(g=>rosterCol(s,g)).join('') : rosterSession(s,ses,gs.length);
     body = `<section class="rview${vin}">${part('AM',['A','B','C','D'])}${part('PM',['E','F','G'])}</section>`;
@@ -2076,7 +2088,7 @@ function editorHTML(s){
 
 function displayHTML(s){
   const d=s.display;
-  const views=[['ROSTER','참가팀 명단'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
+  const views=[['ROSTER_S','참가팀 명단'],['ROSTER','배정 후 명단'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="${d.view==='GROUP'&&d.group===g?'on':''}" data-act="viewGroup" data-g="${g}">${g}</button>`).join('');
   return `<div class="ph"><h2>LIVE 화면 구성</h2><span class="sub">선택 즉시 방송 화면에 반영</span></div>
     <div class="pb"><div class="row2"><span class="lb">묶어 보기</span><div class="seg" role="group" aria-label="묶어 보기">${views}</div></div>
@@ -2142,11 +2154,11 @@ function render(){
 
 const modeFromHash = () => location.hash==='#live' ? 'live' : location.hash==='#mobile' ? 'mobile' : 'admin';
 // 모바일 보기: 실시간 데이터는 그대로 받되, 보는 화면 선택은 이 기기 안에서만 (저장·업로드 없음)
-ui.mfill = false;
+ui.mfill = (()=>{ try{ return localStorage.getItem('sa-bracket-mobile-fill')==='1'; }catch(e){ return false; } })();
 ui.mview = (()=>{ try{ return JSON.parse(localStorage.getItem('sa-bracket-mobile-view')) || {view:'ALL',group:'A'}; }catch(e){ return {view:'ALL',group:'A'}; } })();
 function mbarHTML(){
   const v=ui.mview;
-  const views=[['ROSTER','참가팀'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
+  const views=[['ROSTER_S','참가팀'],['ROSTER','배정 명단'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
   return `<div class="mg mgL"><span class="mlb">묶어 보기</span><div class="mseg">${views}</div><span class="msp"></span>
       <button class="mtool" data-act="mfill" aria-pressed="false">꽉 차게</button><button class="mtool" data-act="mode" data-mode="admin">관리자</button></div>
@@ -2165,6 +2177,13 @@ function setMode(m){
 }
 
 let toastT;
+function askConfirm(msg){            // 브라우저 확인창 대신 화면 안 확인창 (전체 화면이 풀리지 않도록)
+  return new Promise(res=>{
+    const m=$('askModal'); $('askMsg').textContent=msg; m.classList.remove('hidden');
+    const done=v=>{ m.classList.add('hidden'); $('askYes').onclick=$('askNo').onclick=null; res(v); };
+    $('askYes').onclick=()=>done(true); $('askNo').onclick=()=>done(false); $('askYes').focus();
+  });
+}
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1600); }
 
 document.addEventListener('click', e=>{
@@ -2173,12 +2192,13 @@ document.addEventListener('click', e=>{
   switch(d.act){
     case 'mode': setMode(d.mode); break;
     case 'mfill': {
-      ui.mfill=!ui.mfill;
+      ui.mfill=!ui.mfill; try{ localStorage.setItem('sa-bracket-mobile-fill', ui.mfill?'1':'0'); }catch(_){}
       const el=document.documentElement;
       try{ if(ui.mfill){ el.requestFullscreen && el.requestFullscreen().catch(()=>{}); } else if(document.fullscreenElement){ document.exitFullscreen().catch(()=>{}); } }catch(_){}
       render(); break; }
     case 'mview': ui.mview = {view:d.view, group:d.g||ui.mview.group}; try{ localStorage.setItem('sa-bracket-mobile-view', JSON.stringify(ui.mview)); }catch(_){}; lastViewKey=null; render(); break;
     case 'cloudUpload': Cloud.flush(true); break;
+    case 'cloudPull': { const n=Cloud.pending().length; askConfirm(`클라우드에 올라간 최신 데이터로 이 PC 내용을 바꿉니다.${n?`\n업로드하지 않은 변경 ${n}건은 덮어써집니다 (이 PC에 백업 보관).`:''}`).then(ok=>{ if(ok) Cloud.pull(); }); break; }
     case 'cloudAuto': Cloud.setAuto(!Cloud.auto); break;
     case 'cloudInfo': { const n=Cloud.pending().length; toast(Cloud.db ? (n?`업로드 대기 ${n}건: ${Cloud.pending().map(SECTION_LABEL).join(', ')}`:'클라우드와 동일합니다') : '클라우드 미연결 · 모든 변경은 이 PC에 저장되어 있고 연결되면 올릴 수 있습니다'); break; }
     case 'cloudConflicts': Cloud.openConflicts(); break;
@@ -2219,14 +2239,14 @@ document.addEventListener('click', e=>{
       const el=document.querySelector(`[data-key="n${id}"]`); if(el){ el.scrollIntoView({block:'center'}); el.focus(); el.select(); } break; }
     case 'delTeam': {
       const s=Store.state, t=s.teams[d.tid], g=Q.assignment(s)[d.tid];
-      if(confirm(`${t.name} 팀을 삭제할까요?${g?`\n${g}조 대진에서도 빠집니다.`:''}`)) Store.commit(s=>A.removeTeam(s,d.tid));
+      askConfirm(`${t.name} 팀을 삭제할까요?${g?`\n${g}조 대진에서도 빠집니다.`:''}`).then(ok=>{ if(ok) Store.commit(s=>A.removeTeam(s,d.tid)); });
       break; }
-    case 'sample': if(confirm('조 편성·경기를 샘플 진행 상태로 바꿉니다. 팀명·선수·팀장 등 현재 팀 정보는 그대로 유지됩니다.')){ Store.commit(s=>{ const dsp=s.display, cur=s.teams||{}, seeds=s.seeds; const ns=seedState();
+    case 'sample': askConfirm('조 편성·경기를 샘플 진행 상태로 바꿉니다. 팀명·선수·팀장 등 현재 팀 정보는 그대로 유지됩니다.').then(ok=>{ if(!ok) return;  Store.commit(s=>{ const dsp=s.display, cur=s.teams||{}, seeds=s.seeds; const ns=seedState();
       Object.keys(ns.teams).forEach(id=>{ if(cur[id]) ns.teams[id]=cur[id]; });            // 같은 팀은 현장 수정본 유지
       Object.keys(cur).forEach(id=>{ if(!ns.teams[id]) ns.teams[id]=cur[id]; });          // 현장에서 추가한 팀도 유지
-      Object.assign(s, ns); s.display=dsp; if(seeds && seeds.length) s.seeds=seeds; }); toast('샘플 진행 상태를 불러왔습니다 · 팀 정보는 유지'); } break;
-    case 'resetBracket': if(confirm('모든 조 편성과 경기 결과를 지웁니다. 팀 정보(오전·오후 구분 포함)는 유지됩니다.')){ Store.commit(s=>{ Object.assign(s, emptyBracket()); }); toast('조 편성까지 초기화했습니다'); } break;
-    case 'resetResults': if(confirm('조 편성은 그대로 두고 모든 경기 결과·경기중·기권 상태만 지웁니다.')){ Store.commit(s=>{ s.results={}; s.live={liveMatchIds:[],nextMatchId:null}; GROUP_IDS.forEach(g=>{ const grp=s.groups[g]; Object.keys(grp.out).forEach(t=>{ if(grp.out[t]==='forfeit') delete grp.out[t]; }); grp.tieWinner=null; A.rebuild(s,g); }); }); toast('경기 결과를 초기화했습니다'); } break;
+      Object.assign(s, ns); s.display=dsp; if(seeds && seeds.length) s.seeds=seeds; }); toast('샘플 진행 상태를 불러왔습니다 · 팀 정보는 유지'); }); break;
+    case 'resetBracket': askConfirm('모든 조 편성과 경기 결과를 지웁니다. 팀 정보(오전·오후 구분 포함)는 유지됩니다.').then(ok=>{ if(!ok) return;  Store.commit(s=>{ Object.assign(s, emptyBracket()); }); toast('조 편성까지 초기화했습니다'); }); break;
+    case 'resetResults': askConfirm('조 편성은 그대로 두고 모든 경기 결과·경기중·기권 상태만 지웁니다.').then(ok=>{ if(!ok) return;  Store.commit(s=>{ s.results={}; s.live={liveMatchIds:[],nextMatchId:null}; GROUP_IDS.forEach(g=>{ const grp=s.groups[g]; Object.keys(grp.out).forEach(t=>{ if(grp.out[t]==='forfeit') delete grp.out[t]; }); grp.tieWinner=null; A.rebuild(s,g); }); }); toast('경기 결과를 초기화했습니다'); }); break;
     case 'tses': Store.commit(s=>{ const t=s.teams[d.tid]; if(t) t.session = t.session==='PM' ? 'AM' : 'PM'; }); break;
   }
 });
@@ -2450,6 +2470,21 @@ const Cloud = {
     const h=hashOf(Store.state.teams)+hashOf(sectionsOf(Store.state)); if(h===this.lastBackupHash) return;
     this.lastBackupAt=Date.now(); this.lastBackupHash=h;
     this.ref('backup_v1').set({data:JSON.stringify(Store.state), _srvAt:firebase.firestore.FieldValue.serverTimestamp(), _by:this.CLIENT}).catch(()=>{});
+  },
+  async pull(){                                   // 다른 PC가 올린 클라우드 데이터를 이 PC로 내려받기 (이 PC 데이터는 백업)
+    if(!this.db){ toast('클라우드에 연결되지 않았습니다'); return; }
+    try{
+      this.set('uploading');
+      const snap=await this.db.collection(this.COLL).get(); const remote={};
+      snap.forEach(d=>{ if(SECTION_KEYS.includes(d.id)) remote[d.id]=d.data(); });
+      if(!Object.keys(remote).length){ this.set('online'); toast('클라우드에 저장된 데이터가 없습니다'); return; }
+      try{ localStorage.setItem(this.LS_BAK, JSON.stringify(Store.state)); }catch(e){}
+      Store.applyRemote(s=>{ Object.keys(remote).forEach(k=>{ try{ applySection(s,k,JSON.parse(remote[k].data)); }catch(e){} }); });
+      const m=this.meta(), secs=sectionsOf(Store.state);
+      Object.keys(remote).forEach(k=>{ m.revs[k]=remote[k]._rev||0; m.hashes[k]=hashOf(secs[k]); });
+      this.saveMeta(m); this.lastSync=new Date();
+      this.set(this.pending().length?'pending':'synced'); toast('클라우드 데이터를 불러왔습니다');
+    }catch(e){ this.set('error', e.message||'불러오기 실패'); toast('불러오기 실패 · 잠시 후 다시 시도해주세요'); }
   },
   setAuto(on){ this.auto=on; try{ localStorage.setItem(this.LS_AUTO, on?'1':'0'); }catch(e){} toast(on?'자동 업로드 ON · 변경될 때마다 저장 후 업로드합니다':'자동 업로드 OFF · ‘업로드’ 버튼으로 올려주세요'); if(on) this.flush(); else this.paint(); },
   set(st, detail){ this.status=st; this.detail=detail||''; this.paint(); },
