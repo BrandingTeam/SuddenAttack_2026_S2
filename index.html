@@ -486,8 +486,8 @@ button{cursor:pointer}
 @keyframes flash{0%{background-color:rgba(255,255,255,.55)}100%{background-color:transparent}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-.modebar{position:fixed;right:16px;top:calc(16px + env(safe-area-inset-top,0px));z-index:10;display:flex;gap:8px;opacity:0;transition:opacity .25s}
-.modebar.show,.modebar:focus-within{opacity:1}
+.modebar{position:fixed;right:16px;top:calc(16px + env(safe-area-inset-top,0px));z-index:10;display:flex;gap:8px;opacity:0;transition:opacity .15s}
+.modebar.show{opacity:1}
 .mbtn{height:38px;padding:0 16px;background:rgba(20,21,25,.92);border:1px solid #3a3c44;font-family:var(--fk);font-size:14px;letter-spacing:.02em}
 .mbtn:hover{border-color:var(--red-hot)}
 
@@ -841,7 +841,7 @@ button{cursor:pointer}
 .mbtn.ic{width:38px;height:38px;padding:0;display:inline-flex;align-items:center;justify-content:center;background:rgba(20,21,25,.7);color:#b7b9bf}
 .mbtn.ic:hover{color:#fff}
 .modebar{gap:6px}
-.modebar:not(.show):not(:focus-within){opacity:.0}
+.modebar:not(.show){opacity:0;pointer-events:none}
 
 /* ===== v18 ===== */
 /* 1) 조 알파벳은 항상 흰색 */
@@ -1932,10 +1932,10 @@ function stageHTML(s){
     body = `<section class="row qrow am${vin}">${band('AM','오전조','A–D')}${['A','B','C','D'].map(g=>qCard(s,g)).join('')}</section>
     <section class="row qrow pm${vin}">${band('PM','오후조','E–G')}${['E','F','G'].map(g=>qCard(s,g)).join('')}${qCount(s)}</section>`;
   } else if(d.view==='ROSTER_S'){
-    viewLabel='참가팀 명단 · 오전조 / 오후조';
+    viewLabel='출전팀 소개 · 오전조 / 오후조';
     body = `<section class="rview${vin}">${rosterSession(s,'AM',4)}${rosterSession(s,'PM',3)}</section>`;
   } else if(d.view==='ROSTER'){
-    viewLabel='배정 후 명단';
+    viewLabel='조편성';
     const grouped = gs => gs.some(g=>s.groups[g].phase!=='TBD' && s.groups[g].entrants.some(Boolean));   // 오전/오후 각각 조 편성 여부
     const part = (ses,gs) => grouped(gs) ? gs.map(g=>rosterCol(s,g)).join('') : rosterSession(s,ses,gs.length);
     body = `<section class="rview${vin}">${part('AM',['A','B','C','D'])}${part('PM',['E','F','G'])}</section>`;
@@ -2104,7 +2104,7 @@ function editorHTML(s){
 
 function displayHTML(s){
   const d=s.display;
-  const views=[['ROSTER_S','참가팀 명단'],['ROSTER','배정 후 명단'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
+  const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조편성'],['AM','오전조 풀'],['PM','오후조 풀'],['ALL','전체 풀'],['Q','본선 진출 현황']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="${d.view==='GROUP'&&d.group===g?'on':''}" data-act="viewGroup" data-g="${g}">${g}</button>`).join('');
   return `<div class="ph"><h2>LIVE 화면 구성</h2><span class="sub">선택 즉시 방송 화면에 반영</span></div>
     <div class="pb"><div class="row2"><span class="lb">묶어 보기</span><div class="seg" role="group" aria-label="묶어 보기">${views}</div></div>
@@ -2148,6 +2148,7 @@ let teamListDirty=false;
 function render(){
   const s = Store.state;
   computeFlash(s);
+  if(ui.mode==='live' && typeof hideModebar==='function') hideModebar();
   const sv = ui.mode==='mobile' ? {...s, display:{...s.display, view:ui.mview.view, group:ui.mview.group}} : s;
   // LIVE 화면 전환: 로고 트랜지션이 화면을 덮은 뒤 새 화면으로 교체
   if((ui.mode==='live'||ui.mode==='mobile') && lastViewKey!==null && viewKey(sv)!==lastViewKey && !ui.transSwap && !matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -2182,7 +2183,7 @@ ui.mfill = (()=>{ try{ return localStorage.getItem('sa-bracket-mobile-fill')==='
 ui.mview = (()=>{ try{ return JSON.parse(localStorage.getItem('sa-bracket-mobile-view')) || {view:'ALL',group:'A'}; }catch(e){ return {view:'ALL',group:'A'}; } })();
 function mbarHTML(){
   const v=ui.mview;
-  const views=[['ROSTER_S','참가팀'],['ROSTER','배정 명단'],['ALL','전체 풀'],['AM','오전조 풀'],['PM','오후조 풀'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
+  const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조편성'],['AM','오전조 풀'],['PM','오후조 풀'],['ALL','전체 풀'],['Q','본선 진출']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
   const groups=GROUP_IDS.map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
   return `<div class="mg mgL"><span class="mlb">묶어 보기</span><div class="mseg">${views}</div><span class="msp"></span>
       <button class="mtool" data-act="mfill" aria-pressed="false">꽉 차게</button><button class="mtool" data-act="mode" data-mode="admin">관리자</button></div>
@@ -2299,7 +2300,14 @@ document.addEventListener('focusout', e=>{ if(teamListDirty && $('teamList').con
 $('teamFilter').addEventListener('input', e=>{ ui.filter=e.target.value; $('teamList').innerHTML=teamListHTML(Store.state); });
 
 let hideT;
-document.addEventListener('mousemove', ()=>{ if(ui.mode!=='live') return; $('modebar').classList.add('show'); clearTimeout(hideT); hideT=setTimeout(()=>$('modebar').classList.remove('show'),2500); });
+// LIVE 화면 아이콘(관리자·전체화면): 오른쪽 위 모서리에 마우스를 가져갈 때만 잠깐 표시, 1초 뒤 바로 숨김
+document.addEventListener('mousemove', e=>{
+  if(ui.mode!=='live') return;
+  const near = e.clientX > window.innerWidth-200 && e.clientY < 110;
+  if(!near){ if($('modebar').classList.contains('show')){ clearTimeout(hideT); hideT=setTimeout(()=>$('modebar').classList.remove('show'),400); } return; }
+  $('modebar').classList.add('show'); clearTimeout(hideT); hideT=setTimeout(()=>$('modebar').classList.remove('show'),1000);
+});
+const hideModebar = () => { clearTimeout(hideT); const mb=$('modebar'); if(mb){ mb.classList.remove('show'); if(document.activeElement && mb.contains(document.activeElement)) document.activeElement.blur(); } };
 function fitLive(){
   const box=$('liveBox'), mob=ui.mode==='mobile', fill=mob && ui.mfill, land=window.innerWidth>window.innerHeight;
   $('liveView').classList.toggle('mfill', !!fill);
