@@ -1329,6 +1329,41 @@ button{cursor:pointer}
 @keyframes vtBg{0%{opacity:0}18%{opacity:1}72%{opacity:1}100%{opacity:0}}
 @keyframes vtBar{0%{left:-60%}100%{left:130%}}
 @keyframes vtLogo{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}28%{opacity:1;transform:translate(-50%,-50%) scale(1.04)}40%{transform:translate(-50%,-50%) scale(1)}72%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.12)}}
+
+/* ===== v40: 오후조 2조 + 최종 진출전 (8팀) ===== */
+.tr.ru{opacity:.85}
+.tr.ru .tn{color:#b7b9bf}
+.rtag{font-style:normal;font-family:var(--fk);font-size:11px;letter-spacing:0;margin-left:8px;padding:2px 5px 1px;box-shadow:inset 0 0 0 1px #8a8d95;color:#d4d6db;vertical-align:.35em;white-space:nowrap}
+.gw .rtag{font-size:13px;margin-left:10px}
+.gc:not(.gw) .k-f .rtag{font-size:10px;margin-left:5px;padding:1px 4px}
+.qbl.w2{width:auto;padding:0 .2em}
+.qbig.w2{width:auto;padding:8px 16px 0}
+.qru{margin-top:14px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14);font-family:var(--fk);font-size:16px;color:#ff9aa3;display:flex;align-items:center;gap:10px;min-width:0}
+.qru b{font-weight:400;font-size:12px;padding:1px 6px;box-shadow:inset 0 0 0 1px rgba(255,154,163,.6);flex:none}
+.qru .tn{font-size:24px;color:#fff;line-height:1.1;flex:0 1 auto;min-width:0}
+.qcell.team .ql2{font-size:14px;color:var(--mute);letter-spacing:.1em}
+.qcell.team .tn.wait{font-family:var(--fk);font-size:16px;color:#4b4d55}
+.rail .pmmode{display:flex;margin:2px 0 6px}
+.rail .pmmode button{flex:1;padding:0 6px;font-size:12px;height:32px}
+.rg .L.w2{font-size:22px}
+.posrc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.posrc .pos{display:flex;flex-direction:column;gap:4px;padding:10px 12px;background:#141519;border:1px solid #26282e;min-width:0}
+.posrc .pos span{font-size:12px;color:var(--mute)}
+.posrc .pos b{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.posrc .pos b.none{font-weight:300;color:#55575e}
+.rvt .rvsrc{font-family:var(--fk);font-size:12px;color:var(--mute);letter-spacing:.08em}
+.gc.po .gl small{white-space:nowrap}
+.gw.po .k-wbig .tr.empty .tn{font-size:34px;color:#45474e}
+/* 진출팀 박스 팀명: 긴 한글 팀명이 잘리던 문제 → 한 줄 유지 후 자동 축소 */
+.qbw .tn{flex:none;display:block;white-space:nowrap;overflow:hidden;text-overflow:clip;-webkit-line-clamp:unset;line-height:1.15}
+.qbw .qh{flex:none}
+.qbw .qpl{min-height:0;overflow:hidden}
+.qcard .qm.qwin .tn,.qcard .qm.qwin .qlab,.qru{flex:none}
+.qcard .qm.qwin .qroster{min-height:0;overflow:hidden}
+.qcard .qm.qwin .qroster li{line-height:1.2}
+.rvt.ru{box-shadow:inset 0 0 0 1px #5b5e66,inset 3px 0 0 #9fa2aa}
+.rvt.ru .rvn .tn{color:#e4e5e8}
+.rvt.ru .rvn .otag{background:#e4e5e8;color:#0a0a0b;font-size:11px;padding:2px 6px;flex:none}
 </style>
 </head>
 <body>
@@ -1399,8 +1434,9 @@ button{cursor:pointer}
    ===================================================================== */
 const LOGO_SRC = "data:image/png;base64,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";
 const GROUP_IDS = ['A','B','C','D','E','F','G'];
-const SESSION_OF = {A:'AM',B:'AM',C:'AM',D:'AM',E:'PM',F:'PM',G:'PM'};
-const ROUND_LABEL = {M1:'MATCH 1', M2:'MATCH 2', F:'FINAL', L1:'MATCH 1', L2:'MATCH 2', L3:'MATCH 3'};
+const SESSION_OF = {A:'AM',B:'AM',C:'AM',D:'AM',E:'PM',F:'PM',G:'PM',PO:'PM'};
+const PO_ID = 'PO-F';   // 오후조 8팀(2조) 방식: E조 2위 vs F조 2위 최종 진출전
+const ROUND_LABEL = {M1:'MATCH 1', M2:'MATCH 2', F:'FINAL', L1:'MATCH 1', L2:'MATCH 2', L3:'MATCH 3', PO:'FINAL QUALIFIER'};
 
 /* =====================================================================
    2) 데이터 모델 — 컬렉션을 분리해 두어 Firebase/Supabase 테이블로 1:1 매핑 가능
@@ -1425,10 +1461,11 @@ function emptyBracket(){
   return {groups, matches:{}, results:{}, sets:{}, live:{liveMatchIds:[], nextMatchId:null}};
 }
 function defaultDisplay(){ return {view:'ALL', group:'A', seedLabel:'2026 S1 챔피언'}; }   // 방송 화면 구성: ALL | AM | PM | Q | GROUP
-function emptyState(){ return {schema:9, teams:{}, seeds:[], ...emptyBracket(), display:defaultDisplay(), updatedAt:Date.now()}; }
+function emptyState(){ return {schema:9, teams:{}, seeds:[], pmMode:'G3', ...emptyBracket(), display:defaultDisplay(), updatedAt:Date.now()}; }   // pmMode: 'G3' = 오후 3조(10팀) · 'G2' = 오후 2조 + 최종 진출전(8팀)
 function migrate(s){
   if(!s) return null;
   if(s.schema===9){   // 저장 데이터 보정: 보노보노 김동재 → Extract
+    if(s.pmMode!=='G2') s.pmMode='G3';
     Object.values(s.teams||{}).forEach(t=>{ t.players=(t.players||[]).map(p=>p==='turtle'?'J1hoon':p); if(t.leader==='turtle') t.leader='J1hoon'; });   // turtle → J1hoon
     Object.values(s.teams||{}).forEach(t=>{ if(t.name==='보노보노'){ t.players=(t.players||[]).map(p=>p==='김동재'?'Extract':p); if(t.leader==='김동재') t.leader='Extract'; } });
     return s;
@@ -1463,19 +1500,20 @@ const Store = {
   init(){
     const loaded = migrate(this.adapter.load());
     this.state = loaded || seedState();
+    A.rebuildPO(this.state);
     this.adapter.save(this.state);
     this.adapter.subscribe(s=>{ s=migrate(s); if(s && s.updatedAt!==this.state.updatedAt){ this.state = s; this.emit('remote'); } });
   },
   commit(mutator, kind){
     const s = JSON.parse(JSON.stringify(this.state));
-    mutator(s);
+    mutator(s); A.rebuildPO(s);
     s.updatedAt = Date.now();
     this.state = s; this.adapter.save(s); this.emit(kind==='view' ? 'view' : 'local');   // 'view' = 방송 화면 선택(로컬 전용)
   },
   on(fn){ this.listeners.add(fn); },
   applyRemote(mutator){                         // 클라우드에서 받은 변경 반영 (로컬 저장은 즉시, 업로드 트리거는 하지 않음)
     const s = JSON.parse(JSON.stringify(this.state));
-    mutator(s); s.updatedAt = Date.now();
+    mutator(s); A.rebuildPO(s); s.updatedAt = Date.now();
     this.state = s; this.adapter.save(s); this.emit('cloud');
   },
   emit(src){ this.listeners.forEach(fn=>fn(this.state, src)); }
@@ -1492,13 +1530,24 @@ const FMT_INFO = {
   WO:{tag:'부전승', head:'WALKOVER', desc:'남은 1팀이 경기 없이 본선 진출'}
 };
 const Q = {
-  active(s,g){ const grp=s.groups[g]; return grp.entrants.filter(t=>t && s.teams[t] && grp.out[t]!=='noshow'); },
+  hasPO(s){ return (s.pmMode||'G3')==='G2'; },                                   // 오후조 2조 + 최종 진출전 방식인지
+  pmGroups(s){ return Q.hasPO(s) ? ['E','F'] : ['E','F','G']; },                // 화면·운영에 쓰는 오후조 목록
+  allGroups(s){ return ['A','B','C','D', ...Q.pmGroups(s)]; },
+  qualCount(s){ return Q.allGroups(s).filter(g=>Q.qualified(s,g)).length + (Q.hasPO(s) && Q.qualified(s,'PO') ? 1 : 0); },
+  runnerUp(s,g){                                                                 // 조 2위 (최종전 패자 · 풀리그 2위 · 2팀 단판 패자) → 최종 진출전 진출
+    const grp=s.groups[g]; if(!grp || grp.phase!=='DRAW' || !grp.fmt) return null;
+    const q=Q.qualified(s,g); if(!q) return null;
+    if(grp.fmt==='SE' || grp.fmt==='BO5'){ const m=s.matches[g+'-F'], r=s.results[g+'-F']; if(!m||!r) return null; return r.winnerId===m.slotA ? m.slotB : m.slotA; }
+    if(grp.fmt==='RR'){ const t=Q.table(s,g); if(!t.done) return null; const rest=t.list.filter(x=>x.id!==q); return rest[0] ? rest[0].id : null; }
+    return null;
+  },
+  active(s,g){ if(g==='PO'){ const m=s.matches[PO_ID]; return m ? [m.slotA,m.slotB].filter(Boolean) : []; } const grp=s.groups[g]; return grp.entrants.filter(t=>t && s.teams[t] && grp.out[t]!=='noshow'); },
   status(s,id){
     if(s.results[id]) return 'END';
     if(s.live.liveMatchIds.includes(id)) return 'LIVE';
     return 'WAIT';
   },
-  groupMatchIds(s,g){ const f=s.groups[g].fmt; return f==='SE'?[`${g}-M1`,`${g}-M2`,`${g}-F`]:f==='RR'?[`${g}-L1`,`${g}-L2`,`${g}-L3`]:f==='BO5'?[`${g}-F`]:[]; },
+  groupMatchIds(s,g){ if(g==='PO') return Q.hasPO(s) ? [PO_ID] : []; const f=s.groups[g].fmt; return f==='SE'?[`${g}-M1`,`${g}-M2`,`${g}-F`]:f==='RR'?[`${g}-L1`,`${g}-L2`,`${g}-L3`]:f==='BO5'?[`${g}-F`]:[]; },
   winner(s,id){ return s.results[id] ? s.results[id].winnerId : null; },
   table(s,g){                                   // 풀리그 순위: 승수 › 세트 득실 › 라운드 득실 › 세트 득점
     const ids=Q.groupMatchIds(s,g), rows={};
@@ -1518,6 +1567,7 @@ const Q = {
     return {list, done, clinched, tied: tied.length>1 ? tied : []};
   },
   qualified(s,g){
+    if(g==='PO') return Q.hasPO(s) && s.results[PO_ID] ? s.results[PO_ID].winnerId : null;
     const grp=s.groups[g];
     if(grp.phase!=='DRAW' || !grp.fmt) return null;
     if(grp.fmt==='WO') return Q.active(s,g)[0] || null;
@@ -1525,6 +1575,7 @@ const Q = {
     return Q.winner(s,`${g}-F`);
   },
   groupStatus(s,g){
+    if(g==='PO'){ if(!Q.hasPO(s)) return 'TBD'; if(Q.qualified(s,'PO')) return 'DONE'; const m=s.matches[PO_ID]; if(!m||!m.slotA||!m.slotB) return 'TBD'; return Q.status(s,PO_ID)==='LIVE' ? 'LIVE' : 'WAIT'; }
     const grp=s.groups[g];
     if(grp.phase==='ENTRY') return 'ENTRY';
     if(grp.phase!=='DRAW' || !grp.fmt) return 'TBD';
@@ -1534,7 +1585,7 @@ const Q = {
     if(grp.fmt==='RR' && Q.table(s,g).tied.length) return 'TIE';
     return ids.some(id=>s.results[id]) ? 'PLAY' : 'WAIT';
   },
-  started(s,g){ return Q.groupMatchIds(s,g).some(id=>s.results[id] && !s.results[id].wo); },
+  started(s,g){ if(g==='PO') return !!s.results[PO_ID]; return Q.groupMatchIds(s,g).some(id=>s.results[id] && !s.results[id].wo); },
   outOf(s,tid){ for(const g of GROUP_IDS){ const grp=s.groups[g]; if(grp.entrants.includes(tid) && grp.out[tid]) return grp.out[tid]; } return null; },
   assignment(s){ // teamId -> groupId
     const map = {};
@@ -1547,6 +1598,7 @@ const A = {
   unlive(s,id){ s.live.liveMatchIds = s.live.liveMatchIds.filter(x=>x!==id); },
   // 참가팀·불참·기권 상태로부터 경기 목록을 다시 만든다 (포맷 자동 결정)
   rebuild(s,g){
+    if(g==='PO') return;                                   // 최종 진출전은 commit 마지막에 rebuildPO 로 갱신
     const grp=s.groups[g], act=Q.active(s,g), prefix=g+'-';
     const fmt = grp.phase==='DRAW' ? (FMT_BY_N[act.length]||null) : null;
     s.sets=s.sets||{};
@@ -1575,6 +1627,7 @@ const A = {
     if(grp.tieWinner && !(fmt==='RR' && Q.table(s,g).tied.includes(grp.tieWinner))) grp.tieWinner=null;
   },
   autoNext(s,g,justId){                          // 경기 종료 → 다음 경기 자동 ON
+    if(g==='PO') return;
     const grp=s.groups[g], ids=Q.groupMatchIds(s,g);
     if(!justId || ids.some(id=>Q.status(s,id)==='LIVE')) return;
     let nxt=null;
@@ -1612,7 +1665,7 @@ const A = {
     delete s.results[id]; if(s.sets) delete s.sets[id];
     const m=s.matches[id]; if(!m) return;
     A.unlive(s,id); A.rebuild(s,m.groupId);
-    const g=m.groupId, grp=s.groups[g];
+    const g=m.groupId, grp=s.groups[g]; if(!grp) return;
     if(grp.fmt==='SE' && m.round==='F' && s.results[g+'-M1'] && s.results[g+'-M2']) A.setStatus(s,id,'LIVE');
     if(grp.fmt==='SE' && (m.round==='M1'||m.round==='M2')){   // 1·2경기 취소: 다른 쪽 경기가 끝나 있으면 취소한 경기를 다시 진행중 ON
       const other = g+(m.round==='M1'?'-M2':'-M1');
@@ -1664,6 +1717,27 @@ const A = {
   toggleSeed(s,tid){ s.seeds = s.seeds.includes(tid) ? s.seeds.filter(x=>x!==tid) : [...s.seeds, tid]; },
   toggleQseed(s,tid){ const t=s.teams[tid]; if(t) t.qseed=!t.qseed; },
   setDisplay(s,view,group){ s.display = {...s.display, view, group: group || s.display.group}; },
+  // 오후조 8팀 방식: E조 2위 vs F조 2위 최종 진출전(Bo3) — 모든 변경 뒤 자동 갱신 (Store.commit)
+  rebuildPO(s){
+    const id=PO_ID; s.sets=s.sets||{}; s.live=s.live||{liveMatchIds:[],nextMatchId:null};
+    if(!Q.hasPO(s)){ delete s.matches[id]; delete s.results[id]; delete s.sets[id]; A.unlive(s,id); return; }
+    const a=Q.runnerUp(s,'E')||null, b=Q.runnerUp(s,'F')||null, old=s.matches[id];
+    if(!old || old.slotA!==a || old.slotB!==b || old.groupId!=='PO') s.matches[id]={id, groupId:'PO', round:'PO', slotA:a, slotB:b, bo:3};
+    if(s.sets[id] && (s.sets[id].a!==a || s.sets[id].b!==b)) delete s.sets[id];
+    const r=s.results[id]; if(r && (!a || !b || ![a,b].includes(r.winnerId))) delete s.results[id];
+    if(s.results[id] || !a || !b) A.unlive(s,id);
+    else if(old && (!old.slotA || !old.slotB) && !s.live.liveMatchIds.includes(id)) s.live.liveMatchIds.push(id);   // 양쪽 2위가 모두 정해지면 자동 ON
+  },
+  setPmMode(s,mode){                              // 'G3' 오후 3조(10팀) ↔ 'G2' 오후 2조 + 최종 진출전(8팀)
+    mode = mode==='G2' ? 'G2' : 'G3';
+    if((s.pmMode||'G3')===mode) return;
+    s.pmMode=mode;
+    if(mode==='G2'){                              // G조는 쓰지 않음 → 편성·결과 제거 (팀 정보는 유지)
+      s.groups.G={id:'G', session:'PM', phase:'TBD', entrants:[null,null,null,null], out:{}, fmt:null, size:null, tieWinner:null};
+      Object.keys(s.matches).filter(k=>k.startsWith('G-')).forEach(k=>{ delete s.matches[k]; delete s.results[k]; if(s.sets) delete s.sets[k]; A.unlive(s,k); });
+      if(s.display && s.display.group==='G') s.display.group='E';
+    } else if(s.display && s.display.group==='PO') s.display.group='E';
+  },
   addTeam(s){ const id='t'+Date.now().toString(36)+Math.random().toString(36).slice(2,5); s.teams[id]={id,name:'NEW TEAM',players:[],leader:null}; return id; },
   removeTeam(s,tid){ A.unassign(s,tid); s.seeds=(s.seeds||[]).filter(x=>x!==tid); delete s.teams[tid]; }
 };
@@ -1689,6 +1763,7 @@ function seedState(){
   set('E',['knight','black+','진짜로?','꾸들']); A.setStatus(s,'E-M1','LIVE');
   set('F',['교통사고.','UlsaN_ClaN','캐시캐치'],'ENTRY');
   set('G',['도전자','nirvana','보노보노'],'ENTRY');
+  A.rebuildPO(s);
   return s;
 }
 
@@ -1710,6 +1785,7 @@ function computeFlash(s){
   const cur = {};
   Object.values(s.matches).forEach(m=>{ cur[m.id+'A']=m.slotA; cur[m.id+'B']=m.slotB; });
   GROUP_IDS.forEach(g=>{ cur['Q'+g]=Q.qualified(s,g); (s.groups[g].entrants||[]).forEach(t=>t&&(cur['E'+g+t]=t)); });
+  cur['QPO']=Q.qualified(s,'PO');
   if(prevSlots) Object.keys(cur).forEach(k=>{ if(cur[k] && cur[k]!==prevSlots[k]) flashKeys.add(k); });
   prevSlots = cur;
 }
@@ -1718,18 +1794,20 @@ function chip(st){ return `<span class="chip c-${st}">${st}</span>`; }
 
 const tnHTML = (s,tid) => { const t=s.teams[tid]; return t ? nm(t.name) : 'TBD'; };
 const qsdHTML = (s,tid) => s.teams[tid] && s.teams[tid].qseed ? '<i class="qsd">SEED</i>' : '';   // 예선 시드: 이름 폭을 쓰지 않도록 줄 모서리에 표시
-function teamRow(s,tid,{players=true,cls='',fk='',badge='',score=null}={}){
+function teamRow(s,tid,{players=true,cls='',fk='',badge='',score=null,ph='TBD',ru=false}={}){
   const t = tid && s.teams[tid];
   const fl = flashKeys.has(fk)?' flash':'';
-  if(!t) return `<div class="tr empty ${cls}"><div class="tx"><span class="tn">TBD</span></div></div>`;
+  if(!t) return `<div class="tr empty ${cls}"><div class="tx"><span class="tn">${ph}</span></div></div>`;
+  if(ru && cls.includes('lose')) cls += ' ru';   // 최종전 패자 = 조 2위 → 최종 진출전
   const hasb = badge || cls.includes('win'), forf = Q.outOf(s,tid)==='forfeit' ? ' forf' : '';
-  return `<div class="tr ${cls}${hasb?' hasb':''}${score!=null?' hassc':''}${forf}${fl}">${qsdHTML(s,tid)}<div class="tx"><span class="tn">${tnHTML(s,tid)}</span>${players?`<span class="tp">${playersHTML(t)}</span>`:''}</div>${score!=null?`<i class="sc ${/\d/.test(score)?'':'k'}">${score}</i>`:''}${badge?`<i class="wm2">${badge}</i>`:cls.includes('win')?'<i class="wm2 wn">WIN</i>':''}</div>`;
+  return `<div class="tr ${cls}${hasb?' hasb':''}${score!=null?' hassc':''}${forf}${fl}">${qsdHTML(s,tid)}<div class="tx"><span class="tn">${tnHTML(s,tid)}${ru&&cls.includes('lose')?'<i class="rtag">최종 진출전</i>':''}</span>${players?`<span class="tp">${playersHTML(t)}</span>`:''}</div>${score!=null?`<i class="sc ${/\d/.test(score)?'':'k'}">${score}</i>`:''}${badge?`<i class="wm2">${badge}</i>`:cls.includes('win')?'<i class="wm2 wn">WIN</i>':''}</div>`;
 }
 
 const setCount = (s,id) => { const st=(s.sets||{})[id], m=s.matches[id]; if(!st||!m) return null; let a=0,b=0; st.v.forEach(([p,q])=>{ if(p!=null&&q!=null&&p!==q){ p>q?a++:b++; } }); return (a||b) ? {[st.a]:a,[st.b]:b} : null; };
 const setDetail = (s,id) => { const st=(s.sets||{})[id], m=s.matches[id]; if(!st||!m) return ''; const v=st.v.filter(([p,q])=>p!=null&&q!=null); if(!v.length) return ''; return v.map(([p,q])=> st.a===m.slotA ? `${p}-${q}` : `${q}-${p}`).join(' · '); };
-function matchBox(s,id,x,y,w,kind,tbd,label){
+function matchBox(s,id,x,y,w,kind,tbd,label,opts={}){
   const m=s.matches[id], st=(tbd||!m)?'WAIT':Q.status(s,id), r=m&&!tbd?s.results[id]:null;
+  const ph=opts.ph||['TBD','TBD'], ru=!!opts.ru;
   const c = t => !r||!t ? '' : (r.winnerId===t ? 'win' : 'lose');
   const players = !['sf','f','wf'].includes(kind), showSc = !['f','wf'].includes(kind);
   const live = null;
@@ -1737,10 +1815,11 @@ function matchBox(s,id,x,y,w,kind,tbd,label){
   const a=m&&!tbd?m.slotA:null, b=m&&!tbd?m.slotB:null;
   return `<div class="mb k-${kind} st-${st}" style="left:${x}px;top:${y}px;width:${w}px">
     <div class="mh"><span class="ml">${label||(m?ROUND_LABEL[m.round]:ROUND_LABEL[id.split('-')[1]]||'MATCH')}</span>${tbd?'':st==='LIVE'?'<span class="lvtag"><i></i>진행중</span>':chip(st)}</div>
-    ${teamRow(s,a,{players,cls:c(a),fk:id+'A',score:sc(a)})}
-    ${teamRow(s,b,{players,cls:c(b),fk:id+'B',score:sc(b)})}
+    ${teamRow(s,a,{players,cls:c(a),fk:id+'A',score:sc(a),ph:ph[0],ru})}
+    ${teamRow(s,b,{players,cls:c(b),fk:id+'B',score:sc(b),ph:ph[1],ru})}
   </div>`;
 }
+const ruOpt = (s,g) => ({ru: Q.hasPO(s) && Q.pmGroups(s).includes(g)});   // 오후조 2조 방식: 최종전 패자에 '최종 진출전' 표시
 
 const ST_TEXT = {TBD:'조 편성 대기',ENTRY:'대진 추첨 전',DONE:'본선 진출 확정',LIVE:'경기 진행 중',PLAY:'진행 중',WAIT:'경기 대기',TIE:'세트 포인트 경합 중'};
 
@@ -1802,11 +1881,11 @@ function groupCard(s,g){
   if(fmt==='RR') return `<article class="gc rr ${cls}">${groupHead(s,g)}${leagueHTML(s,g,false)}${qb(gst==='TIE'?'세트 포인트 경합 중':'풀리그 1위 대기')}</article>`;
   if(fmt==='WO') return `<article class="gc ${cls}">${groupHead(s,g)}<div class="brk">${svg('<path class="ln q" d="M204.5 182V292"/>')}
       <div class="mb k-sf st-BYE" style="left:72px;top:110px;width:264px"><div class="mh"><span class="ml"><span class="ko">부전승 진출</span></span></div>${teamRow(s,qid,{fk:'WO'+g,cls:'win',badge:'진출',players:false})}</div></div>${qb('')}</article>`;
-  if(fmt==='BO5') return `<article class="gc s2 ${cls}">${groupHead(s,g)}<div class="brk">${svg(`<path class="${qid?'ln q':'ln'}" d="M204.5 206V292"/>`)}${matchBox(s,`${g}-F`,72,84,264,'sf',false,'FINAL')}</div>${qb('승리팀 대기')}</article>`;
+  if(fmt==='BO5') return `<article class="gc s2 ${cls}">${groupHead(s,g)}<div class="brk">${svg(`<path class="${qid?'ln q':'ln'}" d="M204.5 206V292"/>`)}${matchBox(s,`${g}-F`,72,84,264,'sf',false,'FINAL',ruOpt(s,g))}</div>${qb('승리팀 대기')}</article>`;
   const fst=Q.status(s,g+'-F'), m1Done=!!s.results[`${g}-M1`], m2Done=!!s.results[`${g}-M2`];
   const lineCls = done => fst==='LIVE' ? 'ln live' : done ? 'ln on' : 'ln';
   return `<article class="gc ${cls}">${groupHead(s,g)}<div class="brk">${svg(`<path class="${lineCls(m1Done)}" d="M220 61H232V127H244"/><path class="${lineCls(m2Done)}" d="M220 211H232V167H244"/><path class="${qid?'ln q':'ln'}" d="M326.5 187V292"/>`)}
-      ${matchBox(s,`${g}-M1`,0,0,220,'sf',false)}${matchBox(s,`${g}-M2`,0,150,220,'sf',false)}${matchBox(s,`${g}-F`,244,85,165,'f',false)}</div>${qb('최종전 승리팀 대기')}</article>`;
+      ${matchBox(s,`${g}-M1`,0,0,220,'sf',false)}${matchBox(s,`${g}-M2`,0,150,220,'sf',false)}${matchBox(s,`${g}-F`,244,85,165,'f',false,null,ruOpt(s,g))}</div>${qb('최종전 승리팀 대기')}</article>`;
 }
 
 function wideCard(s,g){
@@ -1822,7 +1901,7 @@ function wideCard(s,g){
   if(fmt==='RR') return `<article class="gc gw rr ${cls}">${groupHead(s,g,true)}<div class="brk">${qt?svg('<path class="ln q" d="M545 174H565"/>'):''}${leagueHTML(s,g,true)}${qt?qbw:''}</div></article>`;
   if(fmt==='WO') return `<article class="gc gw ${cls}">${groupHead(s,g,true)}<div class="brk">${svg('<path class="ln q" d="M545 174H565"/>')}
       <div class="mb k-wbig st-BYE" style="left:0;top:80px;width:545px"><div class="mh"><span class="ml"><span class="ko">부전승 진출</span></span></div>${teamRow(s,qid,{fk:'WO'+g,cls:'win',badge:'진출'})}</div>${qbw}</div></article>`;
-  if(fmt==='BO5') return `<article class="gc gw s2 ${cls}">${groupHead(s,g,true)}<div class="brk">${qt?svg('<path class="ln q" d="M545 174H565"/>'):''}${matchBox(s,`${g}-F`,0,0,qt?545:838,'wbig',false,'FINAL')}${qt?qbw:''}</div></article>`;
+  if(fmt==='BO5') return `<article class="gc gw s2 ${cls}">${groupHead(s,g,true)}<div class="brk">${qt?svg('<path class="ln q" d="M545 174H565"/>'):''}${matchBox(s,`${g}-F`,0,0,qt?545:838,'wbig',false,'FINAL',ruOpt(s,g))}${qt?qbw:''}</div></article>`;
   const fst=tbd?'WAIT':Q.status(s,g+'-F'), m1Done=!!s.results[`${g}-M1`], m2Done=!!s.results[`${g}-M2`];
   const lineCls = done => fst==='LIVE' ? 'ln live' : done ? 'ln on' : 'ln';
   const stage = qt ? 'Q' : (m1Done && m2Done) ? 'F' : 'S';
@@ -1830,8 +1909,35 @@ function wideCard(s,g){
           : stage==='F' ? {sf:300,e:312,fx:324,fw:514,fy:89,fk:'wfp',ra:151,rb:223}    // 최종전 단계: FINAL 확대 + 선수명, 왼쪽 축소
           :               {sf:500,e:512,fx:524,fw:314,fy:109,fk:'wf',ra:161,rb:213};  // 1·2경기 단계: MATCH 확대
   return `<article class="gc gw ${cls} st${stage}">${groupHead(s,g,true)}<div class="brk">${svg(`<path class="${lineCls(m1Done)}" d="M${L.sf} 85H${L.e}V${L.ra}H${L.fx}"/><path class="${lineCls(m2Done)}" d="M${L.sf} 263H${L.e}V${L.rb}H${L.fx}"/>${qt?`<path class="ln q" d="M${L.fx+L.fw} 174H565"/>`:''}`)}
-      ${matchBox(s,`${g}-M1`,0,0,L.sf,'wsf',tbd)}${matchBox(s,`${g}-M2`,0,178,L.sf,'wsf',tbd)}${matchBox(s,`${g}-F`,L.fx,L.fy,L.fw,L.fk,tbd)}${qt?qbw:''}</div>
+      ${matchBox(s,`${g}-M1`,0,0,L.sf,'wsf',tbd)}${matchBox(s,`${g}-M2`,0,178,L.sf,'wsf',tbd)}${matchBox(s,`${g}-F`,L.fx,L.fy,L.fw,L.fk,tbd,null,ruOpt(s,g))}${qt?qbw:''}</div>
     ${tbd?`<div class="tbdtag"><b>TBD</b><span>참가팀 미정</span></div>`:''}</article>`;
+}
+
+/* ---- 최종 진출전(PO) : E조 2위 vs F조 2위 · Bo3 → 1팀 본선 진출 ---- */
+const PO_LABEL = '<span class="ko">최종 진출전</span>';
+const PO_PH = s => ['E','F'].map(g=>`${g}<span class="ko">조</span> 2<span class="ko">위 대기</span>`);
+function poHead(s,wide){
+  const p=progressOf(s,'PO');
+  const cnt = `E<span class="ko">조</span>·F<span class="ko">조</span> 2<span class="ko">위</span> · BO3`;
+  return `<div class="gh"><div class="gl">PO<small>최종 진출전</small><span class="gcnt">${cnt}</span></div>
+      ${wide?`<div class="gprog"><div class="gpt"><span>진행률</span><b>${p}<small>%</small></b></div><i class="gpb"><i style="width:${p}%"></i></i></div>`:`<div class="cprog"><b>${p}<small>%</small></b><i class="gpb"><i style="width:${p}%"></i></i></div>`}
+    </div>`;
+}
+function poCard(s){                               // 전체 풀 화면 (4분할 카드 크기)
+  const id=PO_ID, gst=Q.groupStatus(s,'PO'), qid=Q.qualified(s,'PO'), qt=qid&&s.teams[qid], m=s.matches[id];
+  const cls = `${gst==='LIVE'?'is-live':''} ${gst==='DONE'?'is-done':''} ${gst==='WAIT'?'pre':''}`;
+  const msg = gst==='TBD' ? 'E·F조 2위 팀 대기' : '승리팀 대기';
+  const qb = `<div class="qb ${qt?'on':'off'}${flashKeys.has('QPO')?' flash':''}"><div class="qh"><b>PO</b><span>최종 진출전</span></div><div class="qt">${qt?`<span class="tn">${nm(qt.name)}</span><span class="tp">${playersHTML(qt)}</span>`:`<span class="tn">${msg}</span>`}</div>${qt?'<i class="stamp" aria-hidden="true"><b>본선</b><span>진출</span></i>':''}</div>`;
+  const svg = paths => `<svg width="409" height="294" viewBox="0 0 409 294" aria-hidden="true">${paths}</svg>`;
+  return `<article class="gc s2 po ${cls}">${poHead(s)}<div class="brk">${svg(`<path class="${qid?'ln q':'ln'}" d="M204.5 206V292"/>`)}${matchBox(s,id,72,84,264,'sf',false,PO_LABEL,{ph:PO_PH(s)})}</div>${qb}</article>`;
+}
+function poWideCard(s){                           // 오후조 화면 · 조 단독 화면 (878×454)
+  const id=PO_ID, gst=Q.groupStatus(s,'PO'), qid=Q.qualified(s,'PO'), qt=qid&&s.teams[qid];
+  const cls = `${gst==='LIVE'?'is-live':''} ${gst==='DONE'?'is-done':''} ${gst==='WAIT'?'pre':''} ${qt?'nopl':'nq'}`;
+  const svg = paths => `<svg width="838" height="348" viewBox="0 0 838 348" aria-hidden="true">${paths}</svg>`;
+  const qbw = `<div class="qbw on${flashKeys.has('QPO')?' flash':''}"><div class="qh"><span class="qbig w2">PO</span></div>
+        <i class="stamp" aria-hidden="true"><b>본선</b><span>진출</span></i><span class="tn">${qt?nm(qt.name):''}</span><ul class="qpl">${qt?orderedPlayers(qt).map(p=>`<li class="${p===qt.leader?'ldr':''}">${esc(pName(qt,p))}</li>`).join(''):''}</ul></div>`;
+  return `<article class="gc gw s2 po ${cls}">${poHead(s,true)}<div class="brk">${qt?svg('<path class="ln q" d="M545 174H565"/>'):''}${matchBox(s,id,0,0,qt?545:838,'wbig',false,PO_LABEL,{ph:PO_PH(s)})}${qt?qbw:''}</div></article>`;
 }
 
 function matchLine(s,id){
@@ -1844,14 +1950,32 @@ function liveVs(s,g){
 }
 const vsHTML = pairs => pairs.map(([a,b])=>`${nm(a)}<em class="vsx">VS</em>${nm(b)}`).join('<em class="vsx">/</em>');
 function rosterPanel(s,withPlayers){
-  const n = GROUP_IDS.filter(g=>Q.qualified(s,g)).length;
+  const n = Q.qualCount(s), po = Q.hasPO(s);
   const row = g => { const q=Q.qualified(s,g), t=q&&s.teams[q];
     const txt = t ? `<span class="tn">${nm(t.name)}</span>${withPlayers?`<span class="tp">${playersHTML(t)}</span>`:''}` : `<span class="tn">진출팀 미정</span>`;
     return `<div class="ri ${t?'on':'off'}"><span class="rk">${g}</span>${t?'<i class="mstamp" aria-hidden="true">진출</i>':'<i class="mstamp none"></i>'}<div class="rx">${txt}</div></div>`; };
   const sec = (label,gs) => `<div class="rsec"><span class="rses">${label}</span><div class="rrows">${gs.map(row).join('')}</div></div>`;
-  return `<aside class="ro"><div class="roh"><div class="rt"><b>본선 진출팀</b><span>조별 1팀 · 최종 7팀</span></div><div class="rn">${n}<small> / 7</small></div></div><div class="rl">${sec('오전조',['A','B','C','D'])}${sec('오후조',['E','F','G'])}</div></aside>`;
+  return `<aside class="ro"><div class="roh"><div class="rt"><b>본선 진출팀</b><span>${po?'조별 1팀 + 최종 진출전 1팀 · 최종 7팀':'조별 1팀 · 최종 7팀'}</span></div><div class="rn">${n}<small> / 7</small></div></div><div class="rl">${sec('오전조',['A','B','C','D'])}${sec('오후조',[...Q.pmGroups(s), ...(po?['PO']:[])])}</div></aside>`;
 }
 
+function qmCell(s,id,big){                       // 본선 진출 현황: 경기 칸
+  const m=s.matches[id], st=Q.status(s,id), r=s.results[id];
+  const nmc = tid => `<span class="tn ${r?(r.winnerId===tid?'w':'l'):''}">${tid?nm(teamName(s,tid)):'TBD'}${r&&r.winnerId===tid?'<i class="qw">WIN</i>':''}</span>${big&&tid&&s.teams[tid]?`<span class="tp">${playersHTML(s.teams[tid])}</span>`:''}`;
+  return `<div class="qcell ${big?'big':'qrw'} ${st==='LIVE'?'lv':st==='END'?'end':'wt'}"><span class="ql2">${m.round[0]==='L'?'':ROUND_LABEL[m.round]+(st==='LIVE'?' ':' · ')}${st==='LIVE'?'<b class="qlive"><i></i>경기 중</b>':st==='END'?(r.wo?'기권승':'종료'):'대기'}</span>${big?`${nmc(m.slotA)}<em>VS</em>${nmc(m.slotB)}`:`<div class="qvsr">${nmc(m.slotA)}<em>VS</em>${nmc(m.slotB)}</div>`}</div>`;
+}
+function poQCard(s){                              // 본선 진출 현황: 최종 진출전 카드
+  const id=PO_ID, q=Q.qualified(s,'PO'), t=q&&s.teams[q], gst=Q.groupStatus(s,'PO'), m=s.matches[id];
+  const cls = t?'on':gst==='LIVE'?'live':'off';
+  let main;
+  if(t) main = `<div class="qm qwin"><span class="qlab">최종 진출전 진출팀</span><span class="tn">${nm(t.name)}</span><ul class="qroster">${orderedPlayers(t).map(p=>`<li>${esc(pName(t,p))}${p===t.leader?'<em>팀장</em>':''}</li>`).join('')}</ul><i class="stamp" aria-hidden="true"><b>본선</b><span>진출</span></i></div>`;
+  else if(m && m.slotA && m.slotB) main = `<div class="qm split"><span class="qlab">${gst==='LIVE'?'경기 진행 중':'경기 대기'}</span><div class="qcells m1">${qmCell(s,id,true)}</div></div>`;
+  else {
+    const cell = (g,tid) => `<div class="qcell team"><span class="ql2">${g}조 2위</span>${tid&&s.teams[tid]?`<span class="tn">${nm(teamName(s,tid))}</span><span class="tp">${playersHTML(s.teams[tid])}</span>`:`<span class="tn wait">${g}조 결과 대기</span>`}</div>`;
+    main = `<div class="qm split"><span class="qlab">E·F조 2위 팀 대기</span><div class="qcells t2">${cell('E',m&&m.slotA)}${cell('F',m&&m.slotB)}</div></div>`;
+  }
+  const stText = t ? '본선 진출 확정' : gst==='LIVE' ? '경기 진행 중' : gst==='TBD' ? '2위 팀 대기' : '경기 대기';
+  return `<article class="gc qcard ${cls}${flashKeys.has('QPO')?' flash':''}"><div class="qg"><span class="gl">PO<small>최종 진출전</small></span><span class="qst ${gst==='LIVE'?'lv':''}">${gst==='LIVE'?'<i></i>':''}${stText}</span></div>${main}</article>`;
+}
 function qCard(s,g){
   const q=Q.qualified(s,g), t=q&&s.teams[q], gst=Q.groupStatus(s,g), grp=s.groups[g], fmt=grp.fmt;
   const cls = t?'on':gst==='LIVE'?'live':'off', ids=Q.groupMatchIds(s,g);
@@ -1861,12 +1985,11 @@ function qCard(s,g){
   const outs = grp.phase!=='TBD' ? grp.entrants.filter(x=>x && grp.out[x]==='noshow') : [];
   const items = [...elim.filter(Boolean).map(id=>`<span>${nm(teamName(s,id))}${grp.out[id]==='forfeit'?'<small>기권</small>':''}</span>`), ...outs.map(id=>`<span>${nm(teamName(s,id))}<small>불참</small></span>`)];
   const elimHTML = items.length ? `<div class="qelim"><b>탈락</b>${items.join('<i>·</i>')}</div>` : '';
-  const mCell = (id,big) => { const m=s.matches[id], st=Q.status(s,id), r=s.results[id];
-    const nmc = tid => `<span class="tn ${r?(r.winnerId===tid?'w':'l'):''}">${tid?nm(teamName(s,tid)):'TBD'}${r&&r.winnerId===tid?'<i class="qw">WIN</i>':''}</span>${big&&tid&&s.teams[tid]?`<span class="tp">${playersHTML(s.teams[tid])}</span>`:''}`;
-    const lc = null;
-    return `<div class="qcell ${big?'big':'qrw'} ${st==='LIVE'?'lv':st==='END'?'end':'wt'}"><span class="ql2">${m.round[0]==='L'?'':ROUND_LABEL[m.round]+(st==='LIVE'?' ':' · ')}${st==='LIVE'?'<b class="qlive"><i></i>경기 중</b>':st==='END'?(r.wo?'기권승':'종료'):'대기'}</span>${big?`${nmc(m.slotA)}<em>VS</em>${nmc(m.slotB)}`:`<div class="qvsr">${nmc(m.slotA)}<em>VS</em>${nmc(m.slotB)}</div>`}</div>`; };
+  const mCell = (id,big) => qmCell(s,id,big);
+  const ru = Q.hasPO(s) && Q.pmGroups(s).includes(g) ? Q.runnerUp(s,g) : null;   // 오후조 2조 방식: 2위는 최종 진출전
+  const ruHTML = ru ? `<div class="qru"><b>2위</b><span class="tn">${nm(teamName(s,ru))}</span>최종 진출전 진출</div>` : '';
   let main;
-  if(t) main = `<div class="qm qwin"><span class="qlab">${g}조 진출팀${fmt==='WO'?' · 부전승':''}</span><span class="tn">${nm(t.name)}</span><ul class="qroster">${orderedPlayers(t).map(p=>`<li>${esc(pName(t,p))}${p===t.leader?'<em>팀장</em>':''}</li>`).join('')}</ul><i class="stamp" aria-hidden="true"><b>본선</b><span>진출</span></i></div>`;
+  if(t) main = `<div class="qm qwin"><span class="qlab">${g}조 진출팀${fmt==='WO'?' · 부전승':''}</span><span class="tn">${nm(t.name)}</span><ul class="qroster">${orderedPlayers(t).map(p=>`<li>${esc(pName(t,p))}${p===t.leader?'<em>팀장</em>':''}</li>`).join('')}</ul>${ruHTML}<i class="stamp" aria-hidden="true"><b>본선</b><span>진출</span></i></div>`;
   else if(gst==='ENTRY'){
     const ids2=grp.entrants.filter(x=>x && s.teams[x] && grp.out[x]!=='noshow'), names=ids2;
     main = `<div class="qm split"><span class="qlab">대진 추첨 전 · 경기 예정 팀</span><div class="qcells t${names.length}">${ids2.map(x=>`<div class="qcell team"><span class="tn">${nm(teamName(s,x))}</span><span class="tp">${playersHTML(s.teams[x])}</span></div>`).join('')}</div></div>`;
@@ -1899,11 +2022,21 @@ function rosterCol(s,g){
   const grp=s.groups[g], q=Q.qualified(s,g), ses=grp.session;
   const ids = grp.phase==='TBD' ? [] : grp.entrants.filter(t=>t && s.teams[t]);
   const fmtTxt = grp.fmt ? {SE:'싱글 엘리미네이션',RR:'풀리그',BO5:'단판',WO:'부전승'}[grp.fmt] : grp.phase==='ENTRY' ? '대진 추첨 전' : '조 편성 대기';
+  const ru = Q.hasPO(s) && Q.pmGroups(s).includes(g) ? Q.runnerUp(s,g) : null;   // 오후 2조 방식: 2위는 최종 진출전
   const cards = ids.length ? ids.map(t=>{ const tm=s.teams[t], o=grp.out[t];
-    return `<div class="rvt ${q===t?'q':q?'elim':''} ${o?'out':''}"><div class="rvn"><span class="tn">${nm(tm.name)}</span>${q===t?'<i class="mstamp">진출</i>':''}${o?`<i class="otag">${o==='noshow'?'불참':'기권'}</i>`:''}</div>
+    return `<div class="rvt ${q===t?'q':ru===t?'ru':q?'elim':''} ${o?'out':''}"><div class="rvn"><span class="tn">${nm(tm.name)}</span>${q===t?'<i class="mstamp">진출</i>':''}${ru===t?'<i class="otag">최종 진출전</i>':''}${o?`<i class="otag">${o==='noshow'?'불참':'기권'}</i>`:''}</div>
       <ul>${orderedPlayers(tm).map(p=>`<li>${esc(pName(tm,p))}${p===tm.leader?'<em>팀장</em>':''}</li>`).join('')}</ul></div>`; }).join('')
     : `<div class="rvempty">참가팀 미정</div>`;
   return `<div class="rvc ${ses==='AM'?'am':'pm'}"><div class="rvh"><span class="gl">${g}<small>조</small></span><span class="rvm"><b>${ses==='AM'?'오전조':'오후조'}</b><span>${ses}${ids.length?' · '+ids.length+' TEAMS':''}</span></span></div>${cards}</div>`;
+}
+function rosterColPO(s){                          // 조 확인용 화면: 최종 진출전 열
+  const m=s.matches[PO_ID], q=Q.qualified(s,'PO');
+  const srcs=[['E',m&&m.slotA],['F',m&&m.slotB]].filter(x=>x[1]&&s.teams[x[1]]);
+  const cards = srcs.length ? srcs.map(([g,t])=>{ const tm=s.teams[t];
+    return `<div class="rvt ${q===t?'q':q?'elim':''}"><span class="rvsrc">${g}조 2위</span><div class="rvn"><span class="tn">${nm(tm.name)}</span>${q===t?'<i class="mstamp">진출</i>':''}</div>
+      <ul>${orderedPlayers(tm).map(p=>`<li>${esc(pName(tm,p))}${p===tm.leader?'<em>팀장</em>':''}</li>`).join('')}</ul></div>`; }).join('')
+    : `<div class="rvempty">E·F조 2위 팀 대기</div>`;
+  return `<div class="rvc pm"><div class="rvh"><span class="gl">PO</span><span class="rvm"><b>오후조</b><span>최종 진출전 · Bo3</span></span></div>${cards}</div>`;
 }
 function qCount(s){   // 본선 진출 현황 오른쪽 아래: 본선 시드 팀
   const seeds=(s.seeds||[]).map(id=>s.teams[id]).filter(Boolean);
@@ -1915,7 +2048,7 @@ function qCount(s){   // 본선 진출 현황 오른쪽 아래: 본선 시드 �
 }
 
 function stageHTML(s){
-  const qn = GROUP_IDS.filter(g=>Q.qualified(s,g)).length;
+  const qn = Q.qualCount(s), po = Q.hasPO(s), pmg = Q.pmGroups(s), pmRange = po ? 'E–F' : 'E–G';
   const seeds = (s.seeds||[]).map(id=>s.teams[id]).filter(Boolean);
   const seedHTML = seeds.length ? `<div class="sg n${Math.min(seeds.length,3)} ${seeds.length>2?'c2':''}">${seeds.map(t=>`<div class="sline"><span class="tn"><b class="snm">${nm(t.name)}</b><i class="scol">:</i>${orderedPlayers(t).map(p=>`<span class="${p===t.leader?'sld':''}">${nm(pName(t,p))}</span>`).join('<i class="ssep">·</i>')}</span></div>`).join('')}</div>` : '<span class="none">시드 팀 미정</span>';
   const band = (k,label,range)=>`<div class="band"><span class="bs">${k}</span><span class="bk">${label}</span><span class="br2">${range}</span></div>`;
@@ -1925,28 +2058,28 @@ function stageHTML(s){
     viewLabel='오전조 A–D';
     body = `<section class="vbody${vin}">${band('AM','오전조','A–D')}<div class="vg">${['A','B','C','D'].map(g=>wideCard(s,g)).join('')}</div></section>`;
   } else if(d.view==='PM'){
-    viewLabel='오후조 E–G';
-    body = `<section class="vbody${vin}">${band('PM','오후조','E–G').replace('class="band"','class="band pmb"')}<div class="vg">${['E','F','G'].map(g=>wideCard(s,g)).join('')}${rosterPanel(s,true)}</div></section>`;
+    viewLabel= po ? '오후조 E–F + 최종 진출전' : '오후조 E–G';
+    body = `<section class="vbody${vin}">${band('PM','오후조',pmRange).replace('class="band"','class="band pmb"')}<div class="vg">${pmg.map(g=>wideCard(s,g)).join('')}${po?poWideCard(s):''}${rosterPanel(s,true)}</div></section>`;
   } else if(d.view==='Q'){
     viewLabel='본선 진출 현황 · 최종 7팀';
     body = `<section class="row qrow am${vin}">${band('AM','오전조','A–D')}${['A','B','C','D'].map(g=>qCard(s,g)).join('')}</section>
-    <section class="row qrow pm${vin}">${band('PM','오후조','E–G')}${['E','F','G'].map(g=>qCard(s,g)).join('')}${qCount(s)}</section>`;
+    <section class="row qrow pm${vin}">${band('PM','오후조',pmRange)}${pmg.map(g=>qCard(s,g)).join('')}${po?poQCard(s):''}${qCount(s)}</section>`;
   } else if(d.view==='ROSTER_S'){
     viewLabel='출전팀 소개 · 오전조 / 오후조';
     body = `<section class="rview${vin}">${rosterSession(s,'AM',4)}${rosterSession(s,'PM',3)}</section>`;
   } else if(d.view==='ROSTER'){
     viewLabel='조편성';
     const grouped = gs => gs.some(g=>s.groups[g].phase!=='TBD' && s.groups[g].entrants.some(Boolean));   // 오전/오후 각각 조 편성 여부
-    const part = (ses,gs) => grouped(gs) ? gs.map(g=>rosterCol(s,g)).join('') : rosterSession(s,ses,gs.length);
-    body = `<section class="rview${vin}">${part('AM',['A','B','C','D'])}${part('PM',['E','F','G'])}</section>`;
+    const part = (ses,gs) => grouped(gs) ? gs.map(g=>rosterCol(s,g)).join('') + (ses==='PM'&&po ? rosterColPO(s) : '') : rosterSession(s,ses,ses==='AM'?4:3);
+    body = `<section class="rview${vin}">${part('AM',['A','B','C','D'])}${part('PM',pmg)}</section>`;
   } else if(d.view==='GROUP'){
-    const g=d.group, ses=SESSION_OF[g];
-    viewLabel=`${g}조 · ${ses==='AM'?'오전조':'오후조'}`;
-    body = `<section class="vbody${vin}">${band(ses,ses==='AM'?'오전조':'오후조',g+'조').replace('class="band"',`class="band ${ses==='PM'?'pmb':''}"`)}<div class="solo">${wideCard(s,g)}</div></section>`;
+    const g=d.group, ses=SESSION_OF[g]||'PM', isPO = g==='PO';
+    viewLabel= isPO ? '최종 진출전 · 오후조' : `${g}조 · ${ses==='AM'?'오전조':'오후조'}`;
+    body = `<section class="vbody${vin}">${band(ses,ses==='AM'?'오전조':'오후조',isPO?'최종전':g+'조').replace('class="band"',`class="band ${ses==='PM'?'pmb':''}"`)}<div class="solo">${isPO?poWideCard(s):wideCard(s,g)}</div></section>`;
   } else {
-    viewLabel='각 조별 한 팀씩 본선 진출 · 최종 7팀 결정';
+    viewLabel= po ? '조별 1팀 + 최종 진출전 1팀 본선 진출 · 최종 7팀 결정' : '각 조별 한 팀씩 본선 진출 · 최종 7팀 결정';
     body = `<section class="row am${vin}">${band('AM','오전조','A–D')}${['A','B','C','D'].map(g=>groupCard(s,g)).join('')}</section>
-    <section class="row pm${vin}">${band('PM','오후조','E–G')}${['E','F','G'].map(g=>groupCard(s,g)).join('')}${rosterPanel(s,true)}</section>`;
+    <section class="row pm${vin}">${band('PM','오후조',pmRange)}${pmg.map(g=>groupCard(s,g)).join('')}${po?poCard(s):''}${rosterPanel(s,true)}</section>`;
   }
   return `<div class="stage">
     ${d.view==='Q'?'':`<img class="wm" src="${LOGO_SRC}" alt="">`}
@@ -1996,8 +2129,13 @@ function railHTML(s){
     const s2 = gst==='ENTRY' ? '팀 확정 · 대진 미정' : q ? '진출 · '+esc(teamName(s,q)) : live ? '경기중 · '+esc(teamName(s,s.matches[live].slotA))+' vs '+esc(teamName(s,s.matches[live].slotB)) : grp.size ? grp.size+'팀 · '+({SE:'토너먼트',RR:'풀리그',BO5:'Bo5',WO:'부전승'}[grp.fmt]||'')+' · '+({PLAY:'진행 중',WAIT:'대기',TIE:'동률 판정'}[gst]||'') : '미정 (TBD)';
     return `<button class="rg ${ui.sel===g?'sel':''}" data-act="sel" data-g="${g}"><span class="L">${g}</span><span class="s1"><i class="dot ${gst}"></i>${{TBD:'TBD',ENTRY:'ENTRY',DONE:'END',LIVE:'경기중 ON',PLAY:'진행',WAIT:'WAIT',TIE:'동률'}[gst]}</span><span class="s2">${s2}</span></button>`;
   };
+  const po = Q.hasPO(s), pm = s.pmMode||'G3';
+  const modeSeg = `<div class="seg sts pmmode" role="group" aria-label="오후조 방식"><button class="${pm==='G3'?'on':''}" data-act="pmmode" data-mode="G3" title="오후 10팀 · E·F·G 3조 · 조별 1팀 진출">3조 (10팀)</button><button class="${pm==='G2'?'on':''}" data-act="pmmode" data-mode="G2" title="오후 8팀 · E·F 2조(4팀 토너먼트) · 조 1위 진출 + 2위끼리 최종 진출전 Bo3">2조+최종전 (8팀)</button></div>`;
+  const poItem = (()=>{ if(!po) return ''; const gst=Q.groupStatus(s,'PO'), q=Q.qualified(s,'PO'), m=s.matches[PO_ID], live=Q.status(s,PO_ID)==='LIVE';
+    const s2 = q ? '진출 · '+esc(teamName(s,q)) : live ? '경기중 · '+esc(teamName(s,m.slotA))+' vs '+esc(teamName(s,m.slotB)) : (m&&m.slotA&&m.slotB) ? esc(teamName(s,m.slotA))+' vs '+esc(teamName(s,m.slotB)) : 'E·F조 2위 대기';
+    return `<button class="rg ${ui.sel==='PO'?'sel':''}" data-act="sel" data-g="PO"><span class="L w2">PO</span><span class="s1"><i class="dot ${gst}"></i>${{TBD:'WAIT 2위',DONE:'END',LIVE:'경기중 ON',WAIT:'READY'}[gst]||gst} · 최종 진출전</span><span class="s2">${s2}</span></button>`; })();
   return `<div class="rh"><b>AM</b>오전조</div>${['A','B','C','D'].map(item).join('')}
-    <div class="rh"><b>PM</b>오후조</div>${['E','F','G'].map(item).join('')}`;
+    <div class="rh"><b>PM</b>오후조</div>${modeSeg}${Q.pmGroups(s).map(item).join('')}${poItem}`;
 }
 
 function teamSelect(s,g,cur,attrs,exclude=[]){
@@ -2011,7 +2149,7 @@ function teamSelect(s,g,cur,attrs,exclude=[]){
 
 function ctlMatch(s,id,sub){
   const m=s.matches[id]; if(!m) return '';
-  const g=m.groupId, grp=s.groups[g], scoreMode = grp.fmt==='RR';
+  const g=m.groupId, grp=s.groups[g]||{fmt:null,out:{}}, scoreMode = grp.fmt==='RR', isPO = g==='PO';
   const st=Q.status(s,id), r=s.results[id], ready=m.slotA&&m.slotB;
   const scores = m.bo===5 ? ['3:0','3:1','3:2'] : ['2:0','2:1'];
   const side = tid => {
@@ -2019,7 +2157,7 @@ function ctlMatch(s,id,sub){
     const winBtns = scoreMode
       ? scores.map(sc=>`<button class="wbtn ${won&&!r.wo&&r.score===sc?'is-win':''}" data-act="win" data-mid="${id}" data-tid="${tid||''}" data-sc="${sc}" ${ready&&!(r&&r.wo)?'':'disabled'}>${sc} 승</button>`).join('')
       : `<button class="wbtn ${won&&!r.wo?'is-win':''}" data-act="win" data-mid="${id}" data-tid="${tid||''}" ${ready&&!(r&&r.wo)?'':'disabled'}>${won&&!r.wo?'승리 ✓':'승리'}</button>`;
-    const ffBtn = `<button class="wbtn ff ${forf?'on':''}" data-act="out" data-g="${g}" data-tid="${tid||''}" data-kind="forfeit" ${tid&&(!r||r.wo)?'':'disabled'} title="이 경기부터 기권 — 남은 경기는 상대 기권승">${forf?'기권 취소':'기권'}</button>`;
+    const ffBtn = isPO ? '' : `<button class="wbtn ff ${forf?'on':''}" data-act="out" data-g="${g}" data-tid="${tid||''}" data-kind="forfeit" ${tid&&(!r||r.wo)?'':'disabled'} title="이 경기부터 기권 — 남은 경기는 상대 기권승">${forf?'기권 취소':'기권'}</button>`;
     return `<div class="cms ${won?'won':lost?'lost':''}"><div class="ctn">${tid?esc(teamName(s,tid)):'— 미정 —'}${forf?'<small>기권</small>':''}${won?(r.wo?'<small>기권승</small>':scoreMode?`<small>${r.score}</small>`:'<small>WIN</small>'):''}</div>
       <div class="scb">${winBtns}${ffBtn}</div></div>`; };
   const achip = st==='LIVE' ? '<span class="chip c-LIVE">경기중</span>' : chip(st);
@@ -2027,7 +2165,7 @@ function ctlMatch(s,id,sub){
   return `<div class="cm st-${st}">
     <div class="cmh"><b>${ROUND_LABEL[m.round]}<small>${sub}${grp.fmt==='BO5'?'':' · Bo'+m.bo}</small></b>${r?chip('END'):onb}</div>
     <div class="cmt">${side(m.slotA)}<div class="vs"><span>VS</span></div>${side(m.slotB)}</div>
-    <div class="cmf">${r?(r.wo?'<span class="hint">기권승 처리됨 · ‘기권 취소’를 누르면 되돌아갑니다</span>':'<span class="hint">선택한 승리 버튼을 한 번 더 누르면 결과가 취소됩니다</span>'):`<span class="hint">${ready?(scoreMode?'경기 시작 시 ON → 끝나면 세트 스코어로 승리팀 선택':'경기 시작 시 ON → 끝나면 승리팀 선택'):'앞 경기 결과를 기다리는 중'}</span>`}</div>
+    <div class="cmf">${r?(r.wo?'<span class="hint">기권승 처리됨 · ‘기권 취소’를 누르면 되돌아갑니다</span>':'<span class="hint">선택한 승리 버튼을 한 번 더 누르면 결과가 취소됩니다</span>'):`<span class="hint">${ready?(scoreMode?'경기 시작 시 ON → 끝나면 세트 스코어로 승리팀 선택':'경기 시작 시 ON → 끝나면 승리팀 선택'):isPO?'E조·F조 결과(2위)가 모두 나오면 자동으로 대진이 잡힙니다':'앞 경기 결과를 기다리는 중'}</span>`}</div>
   </div>`;
 }
 
@@ -2066,8 +2204,23 @@ function fmtHero(s,g){
   else { big=`${n}팀`; sub = nf ? `${name(nf)}${bo(nf)?' · '+bo(nf):''}` : '진행 불가'; if(nf==='BO5') sub='2팀 경기 · 승리팀 본선 진출'; }
   return `<div class="fhero ${grp.phase==='DRAW'?'on':''}"><b>${big}</b><span>${sub}</span></div>`;
 }
+function editorPO(s){                             // 최종 진출전 운영 패널
+  const m=s.matches[PO_ID], q=Q.qualified(s,'PO'), onAir = s.display.view==='GROUP' && s.display.group==='PO';
+  const src = (g,tid) => `<div class="pos"><span>${g}조 2위 ${Q.qualified(s,g)?'(최종전 패자)':''}</span><b class="${tid?'':'none'}">${tid?esc(teamName(s,tid)):Q.qualified(s,g)?'2위 계산 중':g+'조 결과 대기'}</b></div>`;
+  return `<div class="ph"><h2><span class="big">PO</span>최종 진출전</h2><span class="sub">오후조 · E조 2위 vs F조 2위 · Bo3 · 승리팀 본선 진출</span>
+      <button class="btn tool ${onAir?'pri':''}" data-act="viewGroup" data-g="PO">${onAir?'LIVE 화면에 단독 표시 중':'최종 진출전만 LIVE에 표시'}</button></div>
+    <div class="pb">
+      <div class="fhero on"><b>최종 진출전</b><span>E조 2위 vs F조 2위 · Bo3 · 1팀 본선 진출</span></div>
+      <div class="sec"><div class="stp"><span class="n">1</span>대진 (E·F조 결과에서 자동)</div><div class="posrc">${src('E',m&&m.slotA)}${src('F',m&&m.slotB)}</div>
+        <span class="hint">E조·F조의 최종전 패자(풀리그면 2위)가 자동으로 들어옵니다. 두 팀이 정해지면 경기중이 자동 ON 됩니다.</span></div>
+      <div class="sec"><div class="stp"><span class="n">2</span>경기 진행 · 최종 진출전 Bo3</div>${m?ctlMatch(s,PO_ID,'E조 2위 vs F조 2위'):''}</div>
+      <div class="sec"><div class="stp"><span class="n">3</span>본선 진출</div><div class="qbox ${q?'on':'off'}"><b>QUALIFIED</b><span class="qv">${q?esc(teamName(s,q)):'결과가 나오면 자동으로 확정됩니다'}</span></div></div>
+    </div>`;
+}
 function editorHTML(s){
+  if(ui.sel==='PO') return editorPO(s);
   const g=ui.sel, grp=s.groups[g], q=Q.qualified(s,g), act=Q.active(s,g), started=Q.started(s,g), fmt=grp.fmt;
+  const poG = Q.hasPO(s) && Q.pmGroups(s).includes(g), ru = poG ? Q.runnerUp(s,g) : null;
   const phaseSeg = [['TBD','팀 미정'],['ENTRY','팀 확정 · 대진 미정'],['DRAW','대진 확정']].map(([v,l])=>`<button class="${grp.phase===v?'on':''}" data-act="phase" data-g="${g}" data-phase="${v}">${l}</button>`).join('');
   const onAir = s.display.view==='GROUP' && s.display.group===g;
   let body='';
@@ -2081,7 +2234,7 @@ function editorHTML(s){
         <button class="obtn ${o==='noshow'?'on':''}" data-act="out" data-g="${g}" data-tid="${t||''}" data-kind="noshow" ${!t||(started&&o!=='noshow')||o==='forfeit'?'disabled':''} title="경기 시작 전 불참 — 팀 수에 맞춰 방식 자동 변경">불참</button>
         <button class="obtn ${o==='forfeit'?'on':''}" data-act="out" data-g="${g}" data-tid="${t||''}" data-kind="forfeit" ${!t||grp.phase!=='DRAW'||o==='noshow'?'disabled':''} title="경기 중 기권 — 남은 경기는 상대 기권승">기권</button></div>`; }).join('');
     const fmtBox = `<div class="fmtbox ${nf?'':'none'}"><b>${act.length}팀 → ${nf?FMT_INFO[nf].tag:'진행 불가'}</b><span>${nf?FMT_INFO[nf].desc:'참가팀을 1팀 이상 입력하세요'}</span>
-      <span class="fmrule"><em>불참</em> 경기 시작 전 이탈 → 남은 팀 수로 자동 전환 (4→3팀 풀리그 · 3→2팀 단판 · 2→1팀 부전승 진출)<br><em>기권</em> 경기 시작 후 이탈 → 남은 경기는 상대 기권승 처리, 순위·대진에 그대로 반영</span></div>`;
+      <span class="fmrule"><em>불참</em> 경기 시작 전 이탈 → 남은 팀 수로 자동 전환 (4→3팀 풀리그 · 3→2팀 단판 · 2→1팀 부전승 진출)<br><em>기권</em> 경기 시작 후 이탈 → 남은 경기는 상대 기권승 처리, 순위·대진에 그대로 반영${poG?'<br><em>2위</em> 최종전 패자(풀리그는 2위)는 다른 조 2위와 최종 진출전 Bo3 → 승리 시 본선 진출':''}</span></div>`;
     body = `<div class="sec"><div class="stp"><span class="n">2</span>참가팀 · 추첨 순번</div><div class="entrs">${entr}</div></div>`;
     if(grp.phase==='DRAW' && fmt){
       let ms='';
@@ -2091,9 +2244,9 @@ function editorHTML(s){
       if(fmt==='WO') ms = `<div class="empty-note">남은 1팀(${esc(teamName(s,act[0]))})이 부전승으로 본선에 진출합니다.</div>`;
       body += `<div class="sec"><div class="stp"><span class="n">3</span>경기 진행 · ${FMT_INFO[fmt].tag}</div>${ms}</div>`;
     } else if(grp.phase==='ENTRY') body += `<p class="hint" style="margin:-8px 0 20px">추첨이 끝나면 순번을 맞추고 ‘대진 확정’을 누르세요.</p>`;
-    body += `<div class="sec"><div class="stp"><span class="n">4</span>본선 진출</div><div class="qbox ${q?'on':'off'}"><b>QUALIFIED</b><span class="qv">${q?esc(teamName(s,q)):'결과가 나오면 자동으로 확정됩니다'}</span></div></div>`;
+    body += `<div class="sec"><div class="stp"><span class="n">4</span>본선 진출</div><div class="qbox ${q?'on':'off'}"><b>QUALIFIED</b><span class="qv">${q?esc(teamName(s,q)):'결과가 나오면 자동으로 확정됩니다'}</span></div>${poG?`<div class="qbox ${ru?'on':'off'}" style="margin-top:8px"><b>2위 → 최종 진출전</b><span class="qv">${ru?esc(teamName(s,ru)):'최종전이 끝나면 자동으로 정해집니다'}</span></div>`:''}</div>`;
   }
-  return `<div class="ph"><h2><span class="big">${g}</span>조</h2><span class="sub">${grp.session==='AM'?'오전조':'오후조'} · 조별 한 팀 본선 진출</span>
+  return `<div class="ph"><h2><span class="big">${g}</span>조</h2><span class="sub">${grp.session==='AM'?'오전조':'오후조'} · ${poG?'1위 본선 진출 · 2위 최종 진출전':'조별 한 팀 본선 진출'}</span>
       <button class="btn tool ${onAir?'pri':''}" data-act="viewGroup" data-g="${g}">${onAir?'LIVE 화면에 단독 표시 중':'이 조만 LIVE에 표시'}</button></div>
     <div class="pb">
       ${fmtHero(s,g)}
@@ -2105,7 +2258,7 @@ function editorHTML(s){
 function displayHTML(s){
   const d=s.display;
   const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조 확인용'],['AM','조편성 오전'],['PM','조편성 오후'],['ALL','전체 풀'],['Q','결과 안내']].map(([v,l])=>`<button class="${d.view===v?'on':''}" data-act="view" data-view="${v}">${l}</button>`).join('');
-  const groups=GROUP_IDS.map(g=>`<button class="${d.view==='GROUP'&&d.group===g?'on':''}" data-act="viewGroup" data-g="${g}">${g}</button>`).join('');
+  const groups=[...Q.allGroups(s), ...(Q.hasPO(s)?['PO']:[])].map(g=>`<button class="${d.view==='GROUP'&&d.group===g?'on':''}" data-act="viewGroup" data-g="${g}" ${g==='PO'?'title="최종 진출전"':''}>${g}</button>`).join('');
   return `<div class="ph"><h2>LIVE 화면 구성</h2><span class="sub">선택 즉시 방송 화면에 반영</span></div>
     <div class="pb"><div class="row2"><span class="lb">묶어 보기</span><div class="seg" role="group" aria-label="묶어 보기">${views}</div></div>
     <div class="row2"><span class="lb">조 단독</span><div class="seg grp" role="group" aria-label="조 단독 보기">${groups}</div></div>
@@ -2117,7 +2270,7 @@ function teamFilHTML(s){
   const asg=Q.assignment(s), teams=Object.values(s.teams), seeds=s.seeds||[];
   const cnt = k => k==='NONE' ? teams.filter(t=>!asg[t.id]&&!seeds.includes(t.id)).length : k==='SEED' ? seeds.length : k==='SAM'||k==='SPM' ? teams.filter(t=>!seeds.includes(t.id)&&(t.session||'AM')===k.slice(1)).length : teams.filter(t=>asg[t.id]===k).length;
   const b = (k,l) => `<button class="${ui.tg.includes(k)?'on':''}" data-act="tg" data-k="${k}" aria-pressed="${ui.tg.includes(k)}">${l}<small>${cnt(k)}</small></button>`;
-  return `<button class="${ui.tg.length?'':'on'}" data-act="tg" data-k="ALL">전체<small>${teams.length}</small></button>${b('SAM','오전조')}${b('SPM','오후조')}<i class="tfsep"></i>${GROUP_IDS.map(g=>b(g,g+'조')).join('')}${b('NONE','미배정')}${b('SEED','시드')}`;
+  return `<button class="${ui.tg.length?'':'on'}" data-act="tg" data-k="ALL">전체<small>${teams.length}</small></button>${b('SAM','오전조')}${b('SPM','오후조')}<i class="tfsep"></i>${Q.allGroups(s).map(g=>b(g,g+'조')).join('')}${b('NONE','미배정')}${b('SEED','시드')}`;
 }
 
 function teamListHTML(s){
@@ -2130,7 +2283,7 @@ function teamListHTML(s){
   if(!list.length) return `<div class="empty-note">‘${esc(ui.filter)}’와 일치하는 팀이 없습니다.</div>`;
   return list.map(t=>`<div class="tc">
     <select class="gsel ${asg[t.id]?'on':''}" data-change="tgroup" data-tid="${t.id}" data-key="g${t.id}" aria-label="조 배정">
-      <option value="">미배정</option>${GROUP_IDS.map(g=>`<option value="${g}" ${asg[t.id]===g?'selected':''}>${g}조</option>`).join('')}
+      <option value="">미배정</option>${Q.allGroups(s).map(g=>`<option value="${g}" ${asg[t.id]===g?'selected':''}>${g}조</option>`).join('')}
     </select>
     <input class="tnm" value="${esc(t.name)}" data-change="tname" data-tid="${t.id}" data-key="n${t.id}" aria-label="팀명">
     <div class="tact"><button class="tag seedt ${seeds.includes(t.id)?'on':''}" data-act="seed" data-tid="${t.id}" aria-pressed="${seeds.includes(t.id)}">${seeds.includes(t.id)?'본선 시드 ✓':'본선 시드'}</button><button class="tag seedt" data-act="tses" data-tid="${t.id}" title="오전·오후 구분 (조 편성 전 참가팀 명단에 사용)">${t.session==='PM'?'오후':'오전'}</button><button class="tag seedt ${t.qseed?'on':''}" data-act="qseed" data-tid="${t.id}" aria-pressed="${!!t.qseed}">${t.qseed?'예선 시드 ✓':'예선 시드'}</button><button class="del" data-act="delTeam" data-tid="${t.id}">삭제</button></div>
@@ -2147,6 +2300,7 @@ let teamListDirty=false;
 
 function render(){
   const s = Store.state;
+  if(!(Q.allGroups(s).includes(ui.sel) || (ui.sel==='PO' && Q.hasPO(s)))) ui.sel = 'E';   // 방식 변경으로 사라진 조(G·PO)를 보고 있었다면 E조로
   computeFlash(s);
   if(ui.mode==='live' && typeof hideModebar==='function') hideModebar();
   const sv = ui.mode==='mobile' ? {...s, display:{...s.display, view:ui.mview.view, group:ui.mview.group}} : s;
@@ -2184,7 +2338,7 @@ ui.mview = (()=>{ try{ return JSON.parse(localStorage.getItem('sa-bracket-mobile
 function mbarHTML(){
   const v=ui.mview;
   const views=[['ROSTER_S','출전팀 소개'],['ROSTER','조 확인용'],['AM','조편성 오전'],['PM','조편성 오후'],['ALL','전체 풀'],['Q','결과 안내']].map(([k,l])=>`<button class="${v.view===k?'on':''}" data-act="mview" data-view="${k}">${l}</button>`).join('');
-  const groups=GROUP_IDS.map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
+  const st=Store.state, groups=[...Q.allGroups(st), ...(Q.hasPO(st)?['PO']:[])].map(g=>`<button class="g ${v.view==='GROUP'&&v.group===g?'on':''}" data-act="mview" data-view="GROUP" data-g="${g}">${g}</button>`).join('');
   return `<div class="mg mgL"><span class="mlb">묶어 보기</span><div class="mseg">${views}</div><span class="msp"></span>
       <button class="mtool" data-act="mfill" aria-pressed="false">꽉 차게</button><button class="mtool" data-act="mode" data-mode="admin">관리자</button></div>
     <div class="mg mgR"><span class="mlb">조 단독</span><div class="mseg">${groups}</div><span class="msp"></span><span class="msync" id="msync"></span></div>`;
@@ -2233,6 +2387,13 @@ document.addEventListener('click', e=>{
     case 'fullscreen': (document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.())?.catch?.(()=>{}); break;
     case 'openLive': window.open(location.href.split('#')[0]+'#live','sa_live'); break;
     case 'sel': ui.sel=d.g; render(); break;
+    case 'pmmode': {
+      if((Store.state.pmMode||'G3')===d.mode) break;
+      const msg = d.mode==='G2'
+        ? '오후조를 2조(E·F 4팀씩 싱글 토너먼트) + 최종 진출전 방식으로 바꿉니다.\n조 1위 2팀 본선 진출, 2위 2팀은 Bo3 최종 진출전 → 1팀 진출 (오후 총 3팀).\nG조 편성·결과는 지워집니다 (팀 정보는 유지).'
+        : '오후조를 3조(E·F·G, 10팀) 방식으로 되돌립니다.\n최종 진출전 결과는 지워집니다.';
+      askConfirm(msg).then(ok=>{ if(!ok) return; Store.commit(s=>A.setPmMode(s,d.mode)); if(ui.sel==='G'||ui.sel==='PO') ui.sel='E'; render(); toast(d.mode==='G2'?'오후조: 2조 + 최종 진출전 (8팀)':'오후조: 3조 (10팀)'); });
+      break; }
     case 'drawer': e.preventDefault(); ui.drawer=!ui.drawer; render(); break;
     case 'tg': {
       if(d.k==='ALL') ui.tg=[]; else ui.tg = ui.tg.includes(d.k) ? ui.tg.filter(x=>x!==d.k) : [...ui.tg, d.k];
@@ -2352,8 +2513,8 @@ const FIREBASE_CONFIG = {
   appId: "1:745130525374:web:797c1e02483be886b214ef",
   measurementId: "G-P875YST3XX"
 };
-const SECTION_KEYS = ['teams','meta', ...GROUP_IDS.map(g=>'group_'+g)];
-const SECTION_LABEL = k => k==='teams' ? '참가팀 정보' : k==='meta' ? '시드 팀 · 시드 문구' : k.slice(6)+'조 편성 · 경기';
+const SECTION_KEYS = ['teams','meta','playoff', ...GROUP_IDS.map(g=>'group_'+g)];
+const SECTION_LABEL = k => k==='teams' ? '참가팀 정보' : k==='meta' ? '시드 팀 · 시드 문구' : k==='playoff' ? '오후조 방식 · 최종 진출전' : k.slice(6)+'조 편성 · 경기';
 
 function stableStr(v){
   if(v===null || typeof v!=='object') return JSON.stringify(v===undefined?null:v);
@@ -2367,12 +2528,20 @@ function sectionsOf(s){
     const pre=g+'-', pick=o=>Object.fromEntries(Object.entries(o||{}).filter(([k])=>k.startsWith(pre)));
     out['group_'+g] = { group:s.groups[g], matches:pick(s.matches), results:pick(s.results), sets:pick(s.sets), live:((s.live&&s.live.liveMatchIds)||[]).filter(id=>id.startsWith(pre)).sort() };
   });
+  { const pre='PO-', pick=o=>Object.fromEntries(Object.entries(o||{}).filter(([k])=>k.startsWith(pre)));
+    out.playoff = { pmMode:s.pmMode||'G3', matches:pick(s.matches), results:pick(s.results), sets:pick(s.sets), live:((s.live&&s.live.liveMatchIds)||[]).filter(id=>id.startsWith(pre)).sort() }; }
   return out;
 }
 function applySection(s,key,d){
   if(!d) return;
   if(key==='teams') s.teams = d.teams||{};
   else if(key==='meta'){ s.seeds = d.seeds||[]; const lbl = d.seedLabel!=null ? d.seedLabel : (d.display&&d.display.seedLabel); s.display = {...defaultDisplay(), ...(s.display||{}), ...(lbl!=null?{seedLabel:lbl}:{})}; }
+  else if(key==='playoff'){
+    const pre='PO-'; s.pmMode = d.pmMode==='G2' ? 'G2' : 'G3';
+    ['matches','results','sets'].forEach(k=>{ s[k]=s[k]||{}; Object.keys(s[k]).filter(x=>x.startsWith(pre)).forEach(x=>delete s[k][x]); Object.assign(s[k], d[k]||{}); });
+    s.live = s.live || {liveMatchIds:[], nextMatchId:null};
+    s.live.liveMatchIds = [...s.live.liveMatchIds.filter(x=>!x.startsWith(pre)), ...(d.live||[])];
+  }
   else if(key.startsWith('group_')){
     const g=key.slice(6), pre=g+'-';
     if(d.group) s.groups[g] = d.group;
